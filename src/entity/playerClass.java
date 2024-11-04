@@ -49,6 +49,20 @@ public class playerClass extends Entity {
 	}
 
 	public void update() {
+
+		spriteCounter++;
+		if (spriteCounter > 30) {
+			if (spriteNum == 1) {
+				spriteNum = 2;
+			}
+			
+			if (spriteNum == 2) {
+				spriteNum = 1;
+			}
+			
+			spriteCounter=0;
+		}
+		
 		if (kH.downPress == true) {
 			direction = "up";
 			y += speed;
@@ -76,17 +90,38 @@ public class playerClass extends Entity {
 		BufferedImage image = null;
 		switch (direction) {
 		case "up":
-			image = up1;
+
+			if (spriteNum == 1) {
+				image = up1;
+			}
+			if (spriteNum == 2) {
+				image = up2;
+			}
 			break;
 		case "down":
-			image = down1;
+			if (spriteNum == 1) {
+				image = down1;
+			}
+			if (spriteNum == 2) {
+				image = down2;
+			}
 			break;
+
 		case "left":
-			image = left1;
+			if (spriteNum == 1) {
+				image = left1;
+			}
+			if (spriteNum == 2) {
+				image = left2;
+			}
 			break;
 		case "right":
-			image = right1;
-			System.out.print("Hi");
+			if (spriteNum == 1) {
+				image = right1;
+			}
+			if (spriteNum == 2) {
+				image = right2;
+			}
 			break;
 		}
 
