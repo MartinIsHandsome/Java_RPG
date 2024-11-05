@@ -50,20 +50,11 @@ public class playerClass extends Entity {
 
 	public void update() {
 
-		spriteCounter++;
-		if (spriteCounter > 30) {
-			if (spriteNum == 1) {
-				spriteNum = 2;
-			}
-			
-			if (spriteNum == 2) {
-				spriteNum = 1;
-			}
-			
-			spriteCounter=0;
-		}
 		
-		if (kH.downPress == true) {
+	if(kH.downPress == true || kH.leftPress == true || kH.rightPress == true || kH.upPress == true ) {
+		
+	if (kH.downPress == true) {
+			
 			direction = "up";
 			y += speed;
 		}
@@ -80,7 +71,23 @@ public class playerClass extends Entity {
 			direction = "right";
 			x += speed;
 		}
+		spriteCounter++;
+		if (spriteCounter > speedOfChaningTheFrames) {
+			if (spriteNum == 1) {
+				System.out.println("Working,homie chill");
+				spriteNum = 2;
+			}
+			
+			else if (spriteNum == 2) {
+				spriteNum = 1;
+			}
+			
+			spriteCounter=0;
+		}
 
+	}
+		
+	
 	}
 
 	public void draw(Graphics2D g2) {
@@ -123,7 +130,9 @@ public class playerClass extends Entity {
 				image = right2;
 			}
 			break;
+			
 		}
+
 
 		g2.drawImage(image, x, y, panel.tileSize, panel.tileSize, panel);
 	}

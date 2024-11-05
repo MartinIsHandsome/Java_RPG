@@ -12,4 +12,5 @@ public class Entity {
 
 	public int spriteCounter = 1; 
 	public int spriteNum = 1; 
+	public int speedOfChaningTheFrames = 20;
 }
