@@ -6,7 +6,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import firstPackage.gamePanel;
-
+//well I hope it works
 public class tileManager {
 	gamePanel gp;
 	tile[] tile;
