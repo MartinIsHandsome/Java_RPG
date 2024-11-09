@@ -15,16 +15,21 @@ public class playerClass extends Entity {
 	keyControl kH;
 	gamePanel panel;
 
+	public final int screenX;
+	public final int screenY;
+
 	public playerClass(keyControl kH, gamePanel panel) {
 		this.kH = kH;
 		this.panel = panel;
+		screenX = panel.screenWidgth / 2;
+		screenY = panel.screenHeigh / 2;
 		setDefaultValues();
 		getPlayerImage();
 	}
 
 	public void setDefaultValues() {
-		x = 100;
-		y = 100;
+		x = panel.tileSize * 8 - panel.tileSize;
+		y = panel.tileSize * 8 - panel.tileSize;
 		speed = 4;
 		direction = "down";
 	}
@@ -50,44 +55,42 @@ public class playerClass extends Entity {
 
 	public void update() {
 
-		
-	if(kH.downPress == true || kH.leftPress == true || kH.rightPress == true || kH.upPress == true ) {
-		
-	if (kH.downPress == true) {
-			
-			direction = "up";
-			y += speed;
-		}
+		if (kH.downPress == true || kH.leftPress == true || kH.rightPress == true || kH.upPress == true) {
 
-		else if (kH.upPress == true) {
-			direction = "down";
-			y -= speed;
-		} else if (kH.leftPress == true) {
-			direction = "left";
-			x -= speed;
-		}
+			if (kH.downPress == true) {
 
-		else if (kH.rightPress == true) {
-			direction = "right";
-			x += speed;
-		}
-		spriteCounter++;
-		if (spriteCounter > speedOfChaningTheFrames) {
-			if (spriteNum == 1) {
-				System.out.println("Working,homie chill");
-				spriteNum = 2;
+				direction = "up";
+				y += speed;
 			}
-			
-			else if (spriteNum == 2) {
-				spriteNum = 1;
+
+			else if (kH.upPress == true) {
+				direction = "down";
+				y -= speed;
+			} else if (kH.leftPress == true) {
+				direction = "left";
+				x -= speed;
 			}
-			
-			spriteCounter=0;
+
+			else if (kH.rightPress == true) {
+				direction = "right";
+				x += speed;
+			}
+			spriteCounter++;
+			if (spriteCounter > speedOfChaningTheFrames) {
+				if (spriteNum == 1) {
+					System.out.println("Working,homie chill");
+					spriteNum = 2;
+				}
+
+				else if (spriteNum == 2) {
+					spriteNum = 1;
+				}
+
+				spriteCounter = 0;
+			}
+
 		}
 
-	}
-		
-	
 	}
 
 	public void draw(Graphics2D g2) {
@@ -130,10 +133,9 @@ public class playerClass extends Entity {
 				image = right2;
 			}
 			break;
-			
+
 		}
 
-
-		g2.drawImage(image, x, y, panel.tileSize, panel.tileSize, panel);
+		g2.drawImage(image, screenX, screenY, panel.tileSize, panel.tileSize, panel);
 	}
 }
