@@ -31,6 +31,7 @@ public class gamePanel extends JPanel implements Runnable {
 	public final int maxWorldWidth = tileSize *  maxWorldCol;
 	public final int maxWorldHeight = tileSize *  maxWorldRow;
 	keyControl keyH = new keyControl();
+	public collisionChecker checkMe = new collisionChecker(this);
 	tileManager n = new tileManager(this);
 	public playerClass player = new playerClass(keyH, this);
 //	int playerX = 100;
@@ -42,6 +43,7 @@ public class gamePanel extends JPanel implements Runnable {
 		this.setBackground(Color.BLACK);
 		this.setDoubleBuffered(true);
 		this.addKeyListener(keyH);
+		//this.col
 		this.setFocusable(true); // it doesn't work without this?
 	}
 

@@ -13,8 +13,8 @@ import firstPackage.gamePanel;
 //well I hope it works
 public class tileManager {
 	gamePanel gp;
-	tile[] tile;
-	int mapTilesNum[][];
+	public tile[] tile;
+	public int mapTilesNum[][];
 
 	public tileManager(gamePanel gp) {
 		this.gp = gp;
@@ -31,9 +31,12 @@ public class tileManager {
 
 			tile[1] = new tile();
 			tile[1].image = ImageIO.read(getClass().getResourceAsStream("/BackGround/RockTile.png"));
+			tile[1].collision = true;
 
 			tile[2] = new tile();
 			tile[2].image = ImageIO.read(getClass().getResourceAsStream("/BackGround/sea.png"));
+			tile[2].collision = true;
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -80,9 +83,13 @@ public class tileManager {
 			int worldY = row * gp.tileSize;
 			int screenX = worldX - gp.player.x + gp.player.screenX;
 			int screenY = worldY - gp.player.y + gp.player.screenY;
-			
-			e.drawImage(tile[tilesR].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
 
+			if (worldX - gp.tileSize < gp.player.x + gp.player.screenX
+					&& worldX + gp.tileSize > gp.player.x - gp.player.screenX
+					&& worldY - gp.tileSize < gp.player.y + gp.player.screenY
+					&& worldY + gp.tileSize > gp.player.y - gp.player.screenY) {
+				e.drawImage(tile[tilesR].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+			}
 			col += 1;
 
 			// x += gp.tileSize;

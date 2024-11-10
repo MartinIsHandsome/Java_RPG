@@ -1,9 +1,10 @@
 package entity;
 
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 public class Entity {
-	
+
 	public int x, y;
 	public int speed;
 
@@ -11,7 +12,9 @@ public class Entity {
 
 	public String direction;
 
-	public int spriteCounter = 1; 
-	public int spriteNum = 1; 
+	public int spriteCounter = 1;
+	public int spriteNum = 1;
 	public int speedOfChaningTheFrames = 20;
+	public Rectangle solidArea;
+public boolean collisionOn = false;
 }
