@@ -95,16 +95,17 @@ public void setUpGame() {
 	
 		Graphics2D g2 = (Graphics2D) g;
 		
-		//tiles
+		//tiles (they are the first layer so the objects are over them)
 		n.draw(g2);
-		//objects 
+		//objects (they are in 2nd layer so player is seen over them)
 		for(int i=0;i < obj.length;i++) {
 		if(obj[i] != null) {
 			obj[i].draw(g2,this);
 		}
 		}
-		//player
+		//player (last so you can see it the best)
 		player.draw(g2);
+		
 		g2.dispose();
 	}
 }
