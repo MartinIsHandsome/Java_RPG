@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 import entity.playerClass;
+import objectCode.superObject;
 import tile.tileManager;
 
 public class gamePanel extends JPanel implements Runnable {
@@ -33,7 +34,9 @@ public class gamePanel extends JPanel implements Runnable {
 	keyControl keyH = new keyControl();
 	public collisionChecker checkMe = new collisionChecker(this);
 	tileManager n = new tileManager(this);
+	public assetSetter aSet =  new assetSetter(this);
 	public playerClass player = new playerClass(keyH, this);
+	public superObject obj [] = new superObject [10]; 
 //	int playerX = 100;
 //	int playerY = 100;
 //	int speed = 4;
@@ -51,7 +54,10 @@ public class gamePanel extends JPanel implements Runnable {
 		gameThread = new Thread(this);
 		gameThread.start();
 	}
-
+public void setUpGame() {
+	aSet.setObj();
+	
+}
 	@Override
 	public void run() {
 		double drawInterval = 1000000000 / 60; // 0.01666 seconds
@@ -88,7 +94,16 @@ public class gamePanel extends JPanel implements Runnable {
 		super.paintComponent(g);
 	
 		Graphics2D g2 = (Graphics2D) g;
+		
+		//tiles
 		n.draw(g2);
+		//objects 
+		for(int i=0;i < obj.length;i++) {
+		if(obj[i] != null) {
+			obj[i].draw(g2,this);
+		}
+		}
+		//player
 		player.draw(g2);
 		g2.dispose();
 	}
