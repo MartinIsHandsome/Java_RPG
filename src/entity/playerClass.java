@@ -15,7 +15,7 @@ import firstPackage.keyControl;
 public class playerClass extends Entity {
 	keyControl kH;
 	gamePanel panel;
-
+	public int hasKey = 0;
 	public final int screenX;
 	public final int screenY;
 
@@ -28,6 +28,9 @@ public class playerClass extends Entity {
 		solidArea = new Rectangle(x, y, 10, 10);
 		solidArea.x = 8;
 		solidArea.y = 16;
+		solidAreaDefaultX = solidArea.x;
+		solidAreaDefaultY = solidArea.y;
+
 		solidArea.width = 16;
 		solidArea.height = 16;
 		setDefaultValues();
@@ -82,11 +85,14 @@ public class playerClass extends Entity {
 				direction = "right";
 //				x += speed;
 			}
-			
+
 			// CHECK FOR COLLISION
 			collisionOn = false;
 			panel.checkMe.checkTile(this);
 
+			// Collision with Objects
+			int i = panel.checkMe.checkObject(this, true);
+			pickUpObject(i);
 			// IF COLLISION IS FALSE, PLAYER CAN MOVE
 			if (collisionOn == false) {
 				switch (direction) {
@@ -122,49 +128,56 @@ public class playerClass extends Entity {
 
 	}
 
-	public void draw(Graphics2D g2) {
-//		g2.setColor(Color.RED);
-//		g2.fillRect(x, y, panel.tileSize, panel.tileSize);
+	public void pickUpObject(int i) {
+if(i != 999) {
+	String objectname =panel.obj[i].name;
+	
+	switch(objectname) {
+	case "Key":
+		hasKey+=1;
+		panel.obj[i] = null;
+		System.out.println("You got key! Nice job!");
+		break;
+	case "Door":
+		
+		if(hasKey>0) {
+			hasKey-=1;
+			panel.obj[i] = null;
+				
+		}
+		System.out.println("You got Door! F!");
+		break;
+	}
+}
+	}
 
+// In playerClass.java
+	public void draw(Graphics2D g2) {
 		BufferedImage image = null;
 		switch (direction) {
 		case "up":
-
-			if (spriteNum == 1) {
-				image = up1;
-			}
-			if (spriteNum == 2) {
-				image = up2;
-			}
+			image = (spriteNum == 1) ? up1 : up2;
 			break;
 		case "down":
-			if (spriteNum == 1) {
-				image = down1;
-			}
-			if (spriteNum == 2) {
-				image = down2;
-			}
+			image = (spriteNum == 1) ? down1 : down2;
 			break;
-
 		case "left":
-			if (spriteNum == 1) {
-				image = left1;
-			}
-			if (spriteNum == 2) {
-				image = left2;
-			}
+			image = (spriteNum == 1) ? left1 : left2;
 			break;
 		case "right":
-			if (spriteNum == 1) {
-				image = right1;
-			}
-			if (spriteNum == 2) {
-				image = right2;
-			}
+			image = (spriteNum == 1) ? right1 : right2;
 			break;
-
 		}
 
-		g2.drawImage(image, screenX, screenY, panel.tileSize, panel.tileSize, panel);
+		// Draw the player image
+		g2.drawImage(image, screenX, screenY, panel.tileSize, panel.tileSize, null);
+
+//		// Draw a semi-transparent blue overlay for the player
+//		g2.setColor(new Color(0, 0, 255, 100)); // Blue with transparency
+//		g2.fillRect(screenX, screenY, panel.tileSize, panel.tileSize);
+//
+//		// Draw an outline around the player
+//		g2.setColor(Color.BLACK);
+//		g2.drawRect(screenX, screenY, panel.tileSize, panel.tileSize);
 	}
 }

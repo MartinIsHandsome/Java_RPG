@@ -6,7 +6,7 @@ public class collisionChecker {
 	gamePanel nzBrat;
 
 	public collisionChecker(gamePanel nzBrat) {
-		this.nzBrat = nzBrat;
+		this.nzBrat = nzBrat;	
 	}
 
 	public void checkTile(Entity randomEntity) {
@@ -61,5 +61,91 @@ public class collisionChecker {
 			}
 			break;
 		}
+	}
+
+	public int checkObject(Entity nz, boolean player) {
+		int index = 999;
+
+		for (int i = 0; i < nzBrat.obj.length; i++) {
+			if (nzBrat.obj[i] != null) {
+				// Initialize entity's and object's solidArea positions
+				nz.solidArea.x = nz.x + nz.solidAreaDefaultX;
+				nz.solidArea.y = nz.y + nz.solidAreaDefaultY;
+
+				nzBrat.obj[i].solidArea.x = nzBrat.obj[i].worldX + nzBrat.obj[i].solidAreaDefX;
+				nzBrat.obj[i].solidArea.y = nzBrat.obj[i].worldY + nzBrat.obj[i].solidAreaDefY;
+
+				switch (nz.direction) {
+				case "up":
+					nz.solidArea.y -= nz.speed - 7;
+					if (nz.solidArea.intersects(nzBrat.obj[i].solidArea)) {
+						if(nzBrat.obj[i].collision  == true) {
+							nz.collisionOn = true;
+						} 
+						
+						if(player == true) {
+							index = i;
+						}
+						System.out.println("Up collision!");
+						// Add additional collision handling here if needed
+						//index = i; // Set index to the colliding object
+					}
+					break;
+
+				case "down":
+					nz.solidArea.y += nz.speed - 15;
+					if (nz.solidArea.intersects(nzBrat.obj[i].solidArea)) {
+						
+						if(nzBrat.obj[i].collision == true) {
+							nz.collisionOn = true;
+						} 
+						
+						if(player == true) {
+							index = i;
+						}
+						System.out.println("Down collision!");
+						//index = i;
+					}
+					break;
+
+				case "left":
+					nz.solidArea.x -= nz.speed;
+					if (nz.solidArea.intersects(nzBrat.obj[i].solidArea)) {
+						if(nzBrat.obj[i].collision  == true) {
+							nz.collisionOn = true;
+						} 
+						
+						if(player == true) {
+							index = i;
+						}
+						System.out.println("Left collision!");
+						//index = i;
+					}
+					break;
+
+				case "right":
+					nz.solidArea.x += nz.speed;
+					if (nz.solidArea.intersects(nzBrat.obj[i].solidArea)) {
+						if(nzBrat.obj[i].collision  == true) {
+							nz.collisionOn = true;
+						} 
+						
+						if(player == true) {
+							index = i;
+						}
+						System.out.println("Right collision!");
+						//index = i;
+					}
+					break;
+				}
+
+				// Reset solid areas to their default positions after each check
+				nz.solidArea.x = nz.solidAreaDefaultX;
+				nz.solidArea.y = nz.solidAreaDefaultY;
+				nzBrat.obj[i].solidArea.x = nzBrat.obj[i].solidAreaDefX;
+				nzBrat.obj[i].solidArea.y = nzBrat.obj[i].solidAreaDefY;
+			}
+		}
+		return index;
 	}
 }

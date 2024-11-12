@@ -1,5 +1,6 @@
 package tile;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -71,37 +72,38 @@ public class tileManager {
 	}
 
 	public void draw(Graphics2D e) {
-		int col = 0;
-		int row = 0;
-//		int x = 0;
-//		int y = 0;
+    int col = 0;
+    int row = 0;
 
-		while (col < gp.maxWorldCol && row < gp.maxWorldRow) {
+    while (col < gp.maxWorldCol && row < gp.maxWorldRow) {
+        int tilesR = mapTilesNum[col][row];
+        int worldX = col * gp.tileSize;
+        int worldY = row * gp.tileSize;
+        int screenX = worldX - gp.player.x + gp.player.screenX;
+        int screenY = worldY - gp.player.y + gp.player.screenY;
 
-			int tilesR = mapTilesNum[col][row];
-			int worldX = col * gp.tileSize;
-			int worldY = row * gp.tileSize;
-			int screenX = worldX - gp.player.x + gp.player.screenX;
-			int screenY = worldY - gp.player.y + gp.player.screenY;
+        // Draw the tile image
+        if (worldX - gp.tileSize < gp.player.x + gp.player.screenX
+                && worldX + gp.tileSize > gp.player.x - gp.player.screenX
+                && worldY - gp.tileSize < gp.player.y + gp.player.screenY
+                && worldY + gp.tileSize > gp.player.y - gp.player.screenY) {
+            e.drawImage(tile[tilesR].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+            
+            // Draw a semi-transparent overlay on each tile
+//            e.setColor(new Color(255, 0, 0, 100)); // Red with transparency
+//            e.fillRect(screenX, screenY, gp.tileSize, gp.tileSize);
+//
+//            // Draw an outline around each tile
+//            e.setColor(Color.BLACK);
+//            e.drawRect(screenX, screenY, gp.tileSize, gp.tileSize);
+        }
 
-			if (worldX - gp.tileSize < gp.player.x + gp.player.screenX
-					&& worldX + gp.tileSize > gp.player.x - gp.player.screenX
-					&& worldY - gp.tileSize < gp.player.y + gp.player.screenY
-					&& worldY + gp.tileSize > gp.player.y - gp.player.screenY) {
-				e.drawImage(tile[tilesR].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
-			}
-			col += 1;
+        col++;
 
-			// x += gp.tileSize;
-
-			if (col == gp.maxWorldCol) {
-				// y += gp.tileSize;
-				row += 1;
-				col = 0;
-				// x = 0;
-			}
-		}
-		// e.drawRenderedImage(null, null);
-	}
-
+        if (col == gp.maxWorldCol) {
+            row++;
+            col = 0;
+        }
+    }
+}
 }

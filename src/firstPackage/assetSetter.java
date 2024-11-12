@@ -27,10 +27,10 @@ public class assetSetter {
 
 		l.obj[3] = new OBJ_Door();
 		l.obj[3].worldX = 10 * l.tileSize;
-		l.obj[3].worldY = 7 * l.tileSize;
+		l.obj[3].worldY = 6 * l.tileSize;
 
 		l.obj[4] = new OBJ_Chest();
-		l.obj[4].worldX = 5 * l.tileSize;
+		l.obj[4].worldX = 7 * l.tileSize;
 		l.obj[4].worldY = 5 * l.tileSize;
 		
 	}
