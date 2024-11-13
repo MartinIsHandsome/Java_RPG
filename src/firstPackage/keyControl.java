@@ -7,6 +7,8 @@ public class keyControl implements KeyListener {
 
 	public boolean upPress, downPress, leftPress, rightPress;
 
+	
+	public boolean checkTime = false;
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -53,6 +55,16 @@ public class keyControl implements KeyListener {
 
 		if (keyCode == KeyEvent.VK_D) {
 			rightPress = false;
+		}
+		
+		if (keyCode == KeyEvent.VK_T) {
+			
+			if(checkTime == true) {
+				checkTime = false;
+			}
+			else if (checkTime == false){
+				checkTime = true;
+			}
 		}
 
 	}

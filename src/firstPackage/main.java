@@ -10,7 +10,7 @@ public class main {
 		JFrame window = new JFrame();
 		window.setResizable(false);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setTitle("Testing RPG [0.04]");
+		window.setTitle("Testing RPG [0.05]");
 		gamePanel gamePanel = new gamePanel();
 		window.add(gamePanel);
 		window.pack();

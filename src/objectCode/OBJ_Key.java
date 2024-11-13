@@ -4,17 +4,19 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class OBJ_Key extends superObject {
+import firstPackage.gamePanel;
 
-	public OBJ_Key() {
-	name = "Key";
-	try {
-		look = ImageIO.read(getClass().getResourceAsStream("/objects/Object.png"));
-	}
-	catch(IOException e){
-		e.printStackTrace();
-	}
-	
-	
+public class OBJ_Key extends superObject {
+	gamePanel hp;
+
+	public OBJ_Key(gamePanel hp) {
+		name = "Key";
+		try {
+			look = ImageIO.read(getClass().getResourceAsStream("/objects/Object.png"));
+			uTool.scaleImage(look, hp.tileSize, hp.tileSize);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 }

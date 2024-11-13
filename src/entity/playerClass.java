@@ -9,8 +9,10 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import firstPackage.UtilityTool;
 import firstPackage.gamePanel;
 import firstPackage.keyControl;
+import tile.tile;
 
 public class playerClass extends Entity {
 	keyControl kH;
@@ -46,21 +48,44 @@ public class playerClass extends Entity {
 
 	public void getPlayerImage() {
 
+		
+	up1 = 	setPlayer("Front");
+	up2 = 	setPlayer("Front2");
+	down1 = 	setPlayer("Back");
+	down2 = 	setPlayer("Back2");
+	left1 = 	setPlayer("Left2");
+	left2 = 	setPlayer("Left2");
+	right1 = 	setPlayer("Right");
+	right2 = 	setPlayer("Right2");
+//		try { (old method)
+//			up1 = ImageIO.read(getClass().getResourceAsStream("/player/Front.png"));
+//			up2 = ImageIO.read(getClass().getResourceAsStream("/player/Front2.png"));
+//			down1 = ImageIO.read(getClass().getResourceAsStream("/player/Back.png"));
+//			down2 = ImageIO.read(getClass().getResourceAsStream("/player/Back2.png"));
+//			left1 = ImageIO.read(getClass().getResourceAsStream("/player/Left.png"));
+//			left2 = ImageIO.read(getClass().getResourceAsStream("/player/Left2.png"));
+//			right1 = ImageIO.read(getClass().getResourceAsStream("/player/Right.png"));
+//			right2 = ImageIO.read(getClass().getResourceAsStream("/player/Right2.png"));
+//
+//		}
+//
+//		catch (IOException e) {
+//			e.printStackTrace();
+//		}
+	}
+
+	public BufferedImage setPlayer(String imagePath) {
+		UtilityTool uTool = new UtilityTool();
+		BufferedImage image = null;
+
 		try {
-			up1 = ImageIO.read(getClass().getResourceAsStream("/player/Front.png"));
-			up2 = ImageIO.read(getClass().getResourceAsStream("/player/Front2.png"));
-			down1 = ImageIO.read(getClass().getResourceAsStream("/player/Back.png"));
-			down2 = ImageIO.read(getClass().getResourceAsStream("/player/Back2.png"));
-			left1 = ImageIO.read(getClass().getResourceAsStream("/player/Left.png"));
-			left2 = ImageIO.read(getClass().getResourceAsStream("/player/Left2.png"));
-			right1 = ImageIO.read(getClass().getResourceAsStream("/player/Right.png"));
-			right2 = ImageIO.read(getClass().getResourceAsStream("/player/Right2.png"));
-
-		}
-
-		catch (IOException e) {
+			image = ImageIO.read(getClass().getResourceAsStream("/player/" + imagePath + ".png"));
+			image = uTool.scaleImage(image, panel.tileSize,panel.tileSize);
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		return image;
 	}
 
 	public void update() {
@@ -152,7 +177,7 @@ public class playerClass extends Entity {
 				// System.out.println("You got Door! F!");
 				break;
 			case "Chest":
-				panel.view.GameFinished=true;
+				panel.view.GameFinished = true;
 				panel.stopMusic();
 				panel.playSE(1);
 				// System.out.println("You got Door! F!");
@@ -180,14 +205,18 @@ public class playerClass extends Entity {
 		}
 
 		// Draw the player image
-		g2.drawImage(image, screenX, screenY, panel.tileSize, panel.tileSize, null);
+		g2.drawImage(image, screenX, screenY, null);
+
+//		g2.drawImage(image, screenX, screenY, panel.tileSize, panel.tileSize, null);
 
 //		// Draw a semi-transparent blue overlay for the player
-	//	g2.setColor(new Color(0, 0, 255, 100)); // Blue with transparency
-	//	g2.fillRect(screenX+ solidArea.x, screenY + solidArea.y, solidArea.height,solidArea.width);
+		// g2.setColor(new Color(0, 0, 255, 100)); // Blue with transparency
+		// g2.fillRect(screenX+ solidArea.x, screenY + solidArea.y,
+		// solidArea.height,solidArea.width);
 
 		// Draw an outline around the player
-		//g2.setColor(Color.BLACK);
-		//g2.fillRect(screenX+ solidArea.x, screenY + solidArea.y, solidArea.height,solidArea.width);
+		// g2.setColor(Color.BLACK);
+		// g2.fillRect(screenX+ solidArea.x, screenY + solidArea.y,
+		// solidArea.height,solidArea.width);
 	}
 }

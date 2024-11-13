@@ -2,6 +2,7 @@ package tile;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,6 +10,7 @@ import java.io.InputStreamReader;
 
 import javax.imageio.ImageIO;
 
+import firstPackage.UtilityTool;
 import firstPackage.gamePanel;
 
 //well I hope it works
@@ -26,17 +28,34 @@ public class tileManager {
 	}
 
 	public void getTileImage() {
+	//	try {
+			//Old instantiation ways
+			//tile[0] = new tile();
+			//tile[0].image = ImageIO.read(getClass().getResourceAsStream("/BackGround/grass.png"));
+			//tile[1] = new tile();
+//			tile[1].image = ImageIO.read(getClass().getResourceAsStream("/BackGround/RockTile.png"));
+//			tile[1].collision = true;
+//
+//			tile[2] = new tile();
+//			tile[2].image = ImageIO.read(getClass().getResourceAsStream("/BackGround/sea.png"));
+//			tile[2].collision = true;
+
+			setUpScale(0,"grass",false);
+			setUpScale(1,"RockTile",true);
+			setUpScale(2,"sea",false);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+	}
+
+	public void setUpScale(int index, String imagePath, boolean collision) {
+		UtilityTool uTool = new UtilityTool();
+
 		try {
-			tile[0] = new tile();
-			tile[0].image = ImageIO.read(getClass().getResourceAsStream("/BackGround/grass.png"));
-
-			tile[1] = new tile();
-			tile[1].image = ImageIO.read(getClass().getResourceAsStream("/BackGround/RockTile.png"));
-			tile[1].collision = true;
-
-			tile[2] = new tile();
-			tile[2].image = ImageIO.read(getClass().getResourceAsStream("/BackGround/sea.png"));
-			tile[2].collision = true;
+			tile[index] = new tile();
+			tile[index].image = ImageIO.read(getClass().getResourceAsStream("/BackGround/" + imagePath + ".png"));
+			tile[index].image = uTool.scaleImage(tile[index].image, gp.tileSize, gp.tileSize);
+			tile[index].collision = collision;
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -72,38 +91,38 @@ public class tileManager {
 	}
 
 	public void draw(Graphics2D e) {
-    int col = 0;
-    int row = 0;
+		int col = 0;
+		int row = 0;
 
-    while (col < gp.maxWorldCol && row < gp.maxWorldRow) {
-        int tilesR = mapTilesNum[col][row];
-        int worldX = col * gp.tileSize;
-        int worldY = row * gp.tileSize;
-        int screenX = worldX - gp.player.x + gp.player.screenX;
-        int screenY = worldY - gp.player.y + gp.player.screenY;
+		while (col < gp.maxWorldCol && row < gp.maxWorldRow) {
+			int tilesR = mapTilesNum[col][row];
+			int worldX = col * gp.tileSize;
+			int worldY = row * gp.tileSize;
+			int screenX = worldX - gp.player.x + gp.player.screenX;
+			int screenY = worldY - gp.player.y + gp.player.screenY;
 
-        // Draw the tile image
-        if (worldX - gp.tileSize < gp.player.x + gp.player.screenX
-                && worldX + gp.tileSize > gp.player.x - gp.player.screenX
-                && worldY - gp.tileSize < gp.player.y + gp.player.screenY
-                && worldY + gp.tileSize > gp.player.y - gp.player.screenY) {
-            e.drawImage(tile[tilesR].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
-            
-            // Draw a semi-transparent overlay on each tile
+			// Draw the tile image
+			if (worldX - gp.tileSize < gp.player.x + gp.player.screenX
+					&& worldX + gp.tileSize > gp.player.x - gp.player.screenX
+					&& worldY - gp.tileSize < gp.player.y + gp.player.screenY
+					&& worldY + gp.tileSize > gp.player.y - gp.player.screenY) {
+				e.drawImage(tile[tilesR].image, screenX, screenY, null);
+
+				// Draw a semi-transparent overlay on each tile
 //            e.setColor(new Color(255, 0, 0, 100)); // Red with transparency
 //            e.fillRect(screenX, screenY, gp.tileSize, gp.tileSize);
 //
 //            // Draw an outline around each tile
 //            e.setColor(Color.BLACK);
 //            e.drawRect(screenX, screenY, gp.tileSize, gp.tileSize);
-        }
+			}
 
-        col++;
+			col++;
 
-        if (col == gp.maxWorldCol) {
-            row++;
-            col = 0;
-        }
-    }
-}
+			if (col == gp.maxWorldCol) {
+				row++;
+				col = 0;
+			}
+		}
+	}
 }

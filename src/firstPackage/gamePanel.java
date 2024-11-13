@@ -35,14 +35,13 @@ public class gamePanel extends JPanel implements Runnable {
 	public playerClass player = new playerClass(keyH, this);
 	public superObject obj[] = new superObject[10];
 	soundController soundEffects = new soundController();
-	soundController  BackgroundMusic= new soundController();
+	soundController BackgroundMusic = new soundController();
 	public UI view = new UI(this);
 	Thread gameThread;
 
-	
-    // int playerX = 100;
-    //	int playerY = 100;
-    //	int speed = 4;
+	// int playerX = 100;
+	// int playerY = 100;
+	// int speed = 4;
 
 	public gamePanel() {
 		this.setPreferredSize(new Dimension(screenWidgth, screenHeigh));
@@ -60,7 +59,7 @@ public class gamePanel extends JPanel implements Runnable {
 
 	public void setUpGame() {
 		aSet.setObj();
-	playMusic(0);
+		playMusic(0);
 
 	}
 
@@ -101,7 +100,8 @@ public class gamePanel extends JPanel implements Runnable {
 
 		Graphics2D g2 = (Graphics2D) g;
 
-		
+		long drawStart = 0;
+		drawStart = System.nanoTime();
 		// tiles (they are the first layer so the objects are over them)
 		n.draw(g2);
 		// objects (they are in 2nd layer so player is seen over them)
@@ -114,17 +114,27 @@ public class gamePanel extends JPanel implements Runnable {
 		player.draw(g2);
 
 		view.draw(g2);
+
+		if (keyH.checkTime == true) {
+			long endTime = System.nanoTime();
+			long averageTime = endTime - drawStart;
+			System.out.println("Time:" + averageTime);
+			g2.drawString("Time:" + averageTime, 12, 400);
+		}
+
 		g2.dispose();
 	}
-	
+
 	public void playMusic(int i) {
 		BackgroundMusic.setFile(i);
 		BackgroundMusic.playFile();
 		BackgroundMusic.loop();
 	}
+
 	public void stopMusic() {
 		BackgroundMusic.stop();
 	}
+
 	public void playSE(int i) {
 		soundEffects.setFile(i);
 		soundEffects.playFile();
