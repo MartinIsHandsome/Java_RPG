@@ -129,26 +129,30 @@ public class playerClass extends Entity {
 	}
 
 	public void pickUpObject(int i) {
-if(i != 999) {
-	String objectname =panel.obj[i].name;
-	
-	switch(objectname) {
-	case "Key":
-		hasKey+=1;
-		panel.obj[i] = null;
-		System.out.println("You got key! Nice job!");
-		break;
-	case "Door":
-		
-		if(hasKey>0) {
-			hasKey-=1;
-			panel.obj[i] = null;
-				
+		if (i != 999) {
+			String objectname = panel.obj[i].name;
+
+			switch (objectname) {
+			case "Key":
+				hasKey += 1;
+				panel.obj[i] = null;
+				System.out.println("You got key! Nice job!");
+				break;
+			case "Door":
+				if (hasKey > 0) {
+					hasKey -= 1;	
+					panel.obj[i] = null;
+				}
+				System.out.println("You got Door! F!");
+				break;
+			case "Drink":
+				panel.playSE(1);
+				speed += 3;
+				panel.obj[i] = null;
+				//System.out.println("You got Door! F!");
+				break;
+			}
 		}
-		System.out.println("You got Door! F!");
-		break;
-	}
-}
 	}
 
 // In playerClass.java
