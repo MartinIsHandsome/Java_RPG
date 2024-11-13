@@ -136,11 +136,11 @@ public class playerClass extends Entity {
 			case "Key":
 				hasKey += 1;
 				panel.obj[i] = null;
-				System.out.println("You got key! Nice job!");
+				panel.view.showMessage("Ти взе ключ!");
 				break;
 			case "Door":
 				if (hasKey > 0) {
-					hasKey -= 1;	
+					hasKey -= 1;
 					panel.obj[i] = null;
 				}
 				System.out.println("You got Door! F!");
@@ -149,7 +149,13 @@ public class playerClass extends Entity {
 				panel.playSE(1);
 				speed += 3;
 				panel.obj[i] = null;
-				//System.out.println("You got Door! F!");
+				// System.out.println("You got Door! F!");
+				break;
+			case "Chest":
+				panel.view.GameFinished=true;
+				panel.stopMusic();
+				panel.playSE(1);
+				// System.out.println("You got Door! F!");
 				break;
 			}
 		}
@@ -177,11 +183,11 @@ public class playerClass extends Entity {
 		g2.drawImage(image, screenX, screenY, panel.tileSize, panel.tileSize, null);
 
 //		// Draw a semi-transparent blue overlay for the player
-//		g2.setColor(new Color(0, 0, 255, 100)); // Blue with transparency
-//		g2.fillRect(screenX, screenY, panel.tileSize, panel.tileSize);
-//
-//		// Draw an outline around the player
-//		g2.setColor(Color.BLACK);
-//		g2.drawRect(screenX, screenY, panel.tileSize, panel.tileSize);
+	//	g2.setColor(new Color(0, 0, 255, 100)); // Blue with transparency
+	//	g2.fillRect(screenX+ solidArea.x, screenY + solidArea.y, solidArea.height,solidArea.width);
+
+		// Draw an outline around the player
+		//g2.setColor(Color.BLACK);
+		//g2.fillRect(screenX+ solidArea.x, screenY + solidArea.y, solidArea.height,solidArea.width);
 	}
 }
