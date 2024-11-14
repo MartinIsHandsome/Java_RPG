@@ -7,8 +7,13 @@ public class keyControl implements KeyListener {
 
 	public boolean upPress, downPress, leftPress, rightPress;
 
-	
 	public boolean checkTime = false;
+	gamePanel gpReal;
+
+	public keyControl(gamePanel gpNo) {
+		this.gpReal = gpNo;
+	}
+
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -56,13 +61,23 @@ public class keyControl implements KeyListener {
 		if (keyCode == KeyEvent.VK_D) {
 			rightPress = false;
 		}
-		
-		if (keyCode == KeyEvent.VK_T) {
-			
-			if(checkTime == true) {
-				checkTime = false;
+
+		if (keyCode == KeyEvent.VK_P) {
+			if (gpReal.gameState == gpReal.playerState) {
+				gpReal.gameState = gpReal.pauseState;
 			}
-			else if (checkTime == false){
+			
+			else if(gpReal.gameState == gpReal.pauseState) {
+				gpReal.gameState = gpReal.playerState;
+			}
+
+		}
+
+		if (keyCode == KeyEvent.VK_T) {
+
+			if (checkTime == true) {
+				checkTime = false;
+			} else if (checkTime == false) {
 				checkTime = true;
 			}
 		}

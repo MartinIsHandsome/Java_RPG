@@ -28,7 +28,7 @@ public class gamePanel extends JPanel implements Runnable {
 	public final int maxWorldRow = 30;
 	public final int maxWorldWidth = tileSize * maxWorldCol;
 	public final int maxWorldHeight = tileSize * maxWorldRow;
-	keyControl keyH = new keyControl();
+	keyControl keyH = new keyControl(this);
 	public collisionChecker checkMe = new collisionChecker(this);
 	tileManager n = new tileManager(this);
 	public assetSetter aSet = new assetSetter(this);
@@ -39,6 +39,9 @@ public class gamePanel extends JPanel implements Runnable {
 	public UI view = new UI(this);
 	Thread gameThread;
 
+	public int gameState;
+	public final int playerState = 1;
+	public final int pauseState = 2;
 	// int playerX = 100;
 	// int playerY = 100;
 	// int speed = 4;
@@ -60,6 +63,7 @@ public class gamePanel extends JPanel implements Runnable {
 	public void setUpGame() {
 		aSet.setObj();
 		playMusic(0);
+		gameState = playerState;
 
 	}
 
@@ -92,7 +96,14 @@ public class gamePanel extends JPanel implements Runnable {
 	}
 
 	public void update() {
-		player.update();
+		if (gameState == playerState) {
+			player.update();
+		}
+		
+		else if (gameState == pauseState) {
+			//nothing
+		view.drawPauseScreen();	
+		}
 	}
 
 	public void paintComponent(Graphics g) {
