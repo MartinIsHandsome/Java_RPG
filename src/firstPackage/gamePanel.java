@@ -7,6 +7,8 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
+import entity.Entity;
+import entity.NPC_Ally;
 import entity.playerClass;
 import objectCode.superObject;
 import tile.tileManager;
@@ -34,6 +36,7 @@ public class gamePanel extends JPanel implements Runnable {
 	public assetSetter aSet = new assetSetter(this);
 	public playerClass player = new playerClass(keyH, this);
 	public superObject obj[] = new superObject[10];
+	public Entity Npcs[] = new Entity[3];
 	soundController soundEffects = new soundController();
 	soundController BackgroundMusic = new soundController();
 	public UI view = new UI(this);
@@ -62,6 +65,7 @@ public class gamePanel extends JPanel implements Runnable {
 
 	public void setUpGame() {
 		aSet.setObj();
+		aSet.setNPC();
 		playMusic(0);
 		gameState = playerState;
 
@@ -97,12 +101,21 @@ public class gamePanel extends JPanel implements Runnable {
 
 	public void update() {
 		if (gameState == playerState) {
+			// player
 			player.update();
+			
+			// Npc
+			for (int i = 0; i < Npcs.length; i++) {
+				if (Npcs[i] != null) {
+					Npcs[i].update();
+				}
+			}
+
 		}
-		
+
 		else if (gameState == pauseState) {
-			//nothing
-		view.drawPauseScreen();	
+			// nothing
+			view.drawPauseScreen();
 		}
 	}
 
@@ -121,9 +134,17 @@ public class gamePanel extends JPanel implements Runnable {
 				obj[i].draw(g2, this);
 			}
 		}
+
+	
 		// player (last so you can see it the best)
 		player.draw(g2);
 
+		// NPC
+		for (int i = 0; i < Npcs.length; i++) {
+			if (Npcs[i] != null) {
+				Npcs[i].draw(g2, this);
+			}
+		}
 		view.draw(g2);
 
 		if (keyH.checkTime == true) {

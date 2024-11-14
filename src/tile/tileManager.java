@@ -42,7 +42,7 @@ public class tileManager {
 
 			setUpScale(0,"grass",false);
 			setUpScale(1,"RockTile",true);
-			setUpScale(2,"sea",false);
+			setUpScale(2,"sea",true);
 //		} catch (IOException e) {
 //			e.printStackTrace();
 //		}

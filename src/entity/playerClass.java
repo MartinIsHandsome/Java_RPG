@@ -17,11 +17,12 @@ import tile.tile;
 public class playerClass extends Entity {
 	keyControl kH;
 	gamePanel panel;
-	//public int hasKey = 0;
+	public int hasKey = 0;
 	public final int screenX;
 	public final int screenY;
 
 	public playerClass(keyControl kH, gamePanel panel) {
+		super(panel);
 		this.kH = kH;
 		this.panel = panel;
 		screenX = panel.screenWidgth / 2;
@@ -49,15 +50,16 @@ public class playerClass extends Entity {
 	public void getPlayerImage() {
 
 		
-	up1 = 	setPlayer("Front");
-	up2 = 	setPlayer("Front2");
-	down1 = 	setPlayer("Back");
-	down2 = 	setPlayer("Back2");
-	left1 = 	setPlayer("Left2");
-	left2 = 	setPlayer("Left2");
-	right1 = 	setPlayer("Right");
-	right2 = 	setPlayer("Right2");
-//		try { (old method)
+	up1 = 	setPlayer("/player/Front");
+	up2 = 	setPlayer("/player/Front2");
+	down1 = 	setPlayer("/player/Back");
+	down2 = 	setPlayer("/player/Back2");
+	left1 = 	setPlayer("/player/Left2");
+	left2 = 	setPlayer("/player/Left2");
+	right1 = 	setPlayer("/player/Right");
+	right2 = 	setPlayer("/player/Right2");
+	}
+//	try { (old method)
 //			up1 = ImageIO.read(getClass().getResourceAsStream("/player/Front.png"));
 //			up2 = ImageIO.read(getClass().getResourceAsStream("/player/Front2.png"));
 //			down1 = ImageIO.read(getClass().getResourceAsStream("/player/Back.png"));
@@ -72,14 +74,13 @@ public class playerClass extends Entity {
 //		catch (IOException e) {
 //			e.printStackTrace();
 //		}
-	}
-
+	
 	public BufferedImage setPlayer(String imagePath) {
 		UtilityTool uTool = new UtilityTool();
 		BufferedImage image = null;
 
 		try {
-			image = ImageIO.read(getClass().getResourceAsStream("/player/" + imagePath + ".png"));
+			image = ImageIO.read(getClass().getResourceAsStream( imagePath + ".png"));
 			image = uTool.scaleImage(image, panel.tileSize,panel.tileSize);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -118,6 +119,9 @@ public class playerClass extends Entity {
 			// Collision with Objects
 			int i = panel.checkMe.checkObject(this, true);
 			pickUpObject(i);
+			
+			int npcCheck = panel.checkMe.checkEntity(this, panel.Npcs);
+			collisionWithNPc(npcCheck);
 			// IF COLLISION IS FALSE, PLAYER CAN MOVE
 			if (collisionOn == false) {
 				switch (direction) {
@@ -153,42 +157,49 @@ public class playerClass extends Entity {
 
 	}
 
+	public void collisionWithNPc(int i) {
+		if (i != 999) {
+
+				panel.view.showMessage("Брат туй работи страхотно бе,евала!");
+			}	
+	}
+
 	public void pickUpObject(int i) {
 		
-		if (i != 999) {
-			
-		}
-		
 //		if (i != 999) {
-//			String objectname = panel.obj[i].name;
-//
-//			switch (objectname) {
-//			case "Key":
-//				hasKey += 1;
-//				panel.obj[i] = null;
-//				panel.view.showMessage("Ти взе ключ!");
-//				break;
-//			case "Door":
-//				if (hasKey > 0) {
-//					hasKey -= 1;
-//					panel.obj[i] = null;
-//				}
-//				System.out.println("You got Door! F!");
-//				break;
-//			case "Drink":
-//				panel.playSE(1);
-//				speed += 3;
-//				panel.obj[i] = null;
-//				// System.out.println("You got Door! F!");
-//				break;
-//			case "Chest":
-//				panel.view.GameFinished = true;
-//				panel.stopMusic();
-//				panel.playSE(1);
-//				// System.out.println("You got Door! F!");
-//				break;
-//			}
+//			
 //		}
+		
+		if (i != 999) {
+			String objectname = panel.obj[i].name;
+
+			switch (objectname) {
+			case "Key":
+				hasKey += 1;
+				panel.obj[i] = null;
+				panel.view.showMessage("Ти взе ключ!");
+				break;
+			case "Door":
+				if (hasKey > 0) {
+					hasKey -= 1;
+					panel.obj[i] = null;
+				}
+				System.out.println("You got Door! F!");
+				break;
+			case "Drink":
+				panel.playSE(1);
+				speed += 3;
+				panel.obj[i] = null;
+				// System.out.println("You got Door! F!");
+				break;
+			case "Chest":
+				panel.view.GameFinished = true;
+				panel.stopMusic();
+				panel.playSE(1);
+				// System.out.println("You got Door! F!");
+				break;
+			}
+		}
 	}
 
 // In playerClass.java

@@ -30,6 +30,10 @@ public class superObject {
 				&& worldY - gp.tileSize < gp.player.y + gp.player.screenY
 				&& worldY + gp.tileSize > gp.player.y - gp.player.screenY) {
 			e.drawImage(look, screenX, screenY, gp.tileSize, gp.tileSize, null);
+		}
+	}
+}
+
 //
 //			// Draw a semi-transparent green overlay for objects
 //			e.setColor(new Color(0, 255, 0, 100)); // Green with transparency
@@ -38,7 +42,3 @@ public class superObject {
 //			// Draw an outline around each object
 //			e.setColor(Color.BLACK);
 //			e.drawRect(screenX, screenY, gp.tileSize, gp.tileSize);
-		}
-	}
-
-}
