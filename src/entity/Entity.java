@@ -74,10 +74,10 @@ public void update() {
 
 		BufferedImage image = null; 
 		// Draw the object image if within the player’s screen bounds
-		if (y - gp.tileSize < gp.player.x + gp.player.screenX
-				&& x + gp.tileSize > gp.player.x - gp.player.screenX
-				&& x - gp.tileSize < gp.player.y + gp.player.screenY
-				&& x + gp.tileSize > gp.player.y - gp.player.screenY) {
+		if (x + gp.tileSize > gp.player.x - gp.player.screenX &&
+			    x - gp.tileSize < gp.player.x + gp.player.screenX &&
+			    y + gp.tileSize > gp.player.y - gp.player.screenY &&
+			    y - gp.tileSize < gp.player.y + gp.player.screenY) {
 
 			switch (direction) {
 			case "up":
