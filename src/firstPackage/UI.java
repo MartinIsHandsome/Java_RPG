@@ -1,5 +1,6 @@
 package firstPackage;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -19,6 +20,7 @@ public class UI {
 	public boolean GameFinished = false;
 	double playTime;
 	DecimalFormat format = new DecimalFormat("#0.0");
+	public String currectDialogue = "";
 
 	public UI(gamePanel p) {
 		this.k = p;
@@ -49,7 +51,9 @@ public class UI {
 			y = k.screenWidgth / 2 - (k.tileSize * 3);
 			e.drawString(text, x, y);
 
-		} else {
+		}
+
+		else {
 			e.setFont(font_Keys);
 			e.setColor(Color.white);
 			e.drawImage(keyPicture, k.tileSize / 3, k.tileSize / 3, k.tileSize - 6, k.tileSize - 6, null);
@@ -63,19 +67,46 @@ public class UI {
 
 				messageCount += 1;
 
-				if (messageCount >= 120) {
-					messageCount = 0;
-					MessageOn = false;
-				}
+//				if (messageCount >= 120) {
+//					messageCount = 0;
+//					MessageOn = false;
+//				}
 				g2.setFont(font_Keys);
 				g2.setColor(Color.WHITE);
 				if (k.gameState == k.playerState) {
 
-				} else if (k.gameState == k.pauseState) {
+				}
+				if (k.gameState == k.pauseState) {
 					drawPauseScreen();
+				}
+				if (k.gameState == k.DialogueState) {
+					drawScreenDialogue();
 				}
 			}
 		}
+	}
+
+	public void drawScreenDialogue() {
+		int x = k.tileSize * 2;
+		int y = k.tileSize / 2;
+		int wid = k.screenWidgth - (k.tileSize * 4);
+		int high = k.screenHeigh / 5;
+		miniWindow(x, y, wid, high);
+		x += k.tileSize;
+		y += k.tileSize;
+	g2.drawString(currectDialogue,x,y);
+	}
+
+	public void miniWindow(int x, int y, int w, int h) {
+		Color c = new Color(0, 0, 0, 210);
+		g2.setColor(c);
+		g2.fillRoundRect(x, y, w, h, 0, 0);
+
+		c = new Color(225, 225, 225);
+		g2.setColor(c);
+		g2.setStroke(new BasicStroke(4));
+		g2.drawRoundRect(x + 5, y + 5, w - 10, h - 10, 0, 0);
+
 	}
 
 	public void drawPauseScreen() {

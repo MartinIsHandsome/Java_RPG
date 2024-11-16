@@ -24,24 +24,51 @@ public class keyControl implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
 
-		if (keyCode == KeyEvent.VK_W) {
-			upPress = true;
-		}
+		//play state
+		if(gpReal.gameState == gpReal.playerState) {
+			
+		
+			if (keyCode == KeyEvent.VK_W) {
+				upPress = true;
+			}
 
-		if (keyCode == KeyEvent.VK_S) {
-			downPress = true;
-		}
+			if (keyCode == KeyEvent.VK_S) {
+				downPress = true;
+			}
 
-		if (keyCode == KeyEvent.VK_A) {
-			leftPress = true;
-		}
+			if (keyCode == KeyEvent.VK_A) {
+				leftPress = true;
+			}
 
-		if (keyCode == KeyEvent.VK_D) {
-			rightPress = true;
+			if (keyCode == KeyEvent.VK_D) {
+				rightPress = true;
+			}
+			
 		}
+		//play state
+		else if(gpReal.gameState == gpReal.DialogueState) {
+				
+					if (keyCode == KeyEvent.VK_ENTER) {
+						gpReal.gameState = gpReal.playerState;
+					}
+				
+				
+				}
 
 	}
+//			if (keyCode == KeyEvent.VK_P) {
+//				if (gpReal.gameState == gpReal.playerState) {
+//					gpReal.gameState = gpReal.pauseState;
+//				}
+//				
+//				else if(gpReal.gameState == gpReal.pauseState) {
+//					gpReal.gameState = gpReal.playerState;
+//				}
+//
+//			}
 
+	
+			
 	@Override
 	public void keyReleased(KeyEvent e) {
 		int keyCode = e.getKeyCode();

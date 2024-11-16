@@ -22,62 +22,69 @@ public class Entity {
 	public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
 	public int solidAreaDefaultX, solidAreaDefaultY;
 	public boolean collisionOn = false;
-public int actionLock = 0;
+	public int actionLock = 0;
+	String[] dialogue = new String[20];
+	int dialogueIndex = 0;
+
+	public void speak() {
+
+	}
+
 	public Entity(gamePanel k) {
 		this.k = k;
 	}
-public void setAction() {
-	
-}
 
-public void update() {
-	setAction();
-	collisionOn = false;
-	k.checkMe.checkTile(this);
-	k.checkMe.checkObject(this, false);
-	k.checkMe.checkPlayer(this);
-	
-	if (collisionOn == false) {
-		switch (direction) {
-		case "up":
-			y += speed;
-			break;
-		case "down":
-			y -= speed;
-			break;
-		case "left":
-			x -= speed;
-			break;
-		case "right":
-			x += speed;
-			break;
+	public void setAction() {
+
+	}
+
+	public void update() {
+		setAction();
+		collisionOn = false;
+		k.checkMe.checkTile(this);
+		k.checkMe.checkObject(this, false);
+		k.checkMe.checkPlayer(this);
+
+		if (collisionOn == false) {
+			switch (direction) {
+			case "up":
+				y += speed;
+				break;
+			case "down":
+				y -= speed;
+				break;
+			case "left":
+				x -= speed;
+				break;
+			case "right":
+				x += speed;
+				break;
+			}
+		}
+		spriteCounter++;
+		if (spriteCounter > speedOfChaningTheFrames) {
+			if (spriteNum == 1) {
+				System.out.println("Working,homie chill");
+				spriteNum = 2;
+			}
+
+			else if (spriteNum == 2) {
+				spriteNum = 1;
+			}
+
+			spriteCounter = 0;
 		}
 	}
-	spriteCounter++;
-	if (spriteCounter > speedOfChaningTheFrames) {
-		if (spriteNum == 1) {
-			System.out.println("Working,homie chill");
-			spriteNum = 2;
-		}
 
-		else if (spriteNum == 2) {
-			spriteNum = 1;
-		}
-
-		spriteCounter = 0;
-	}
-}
-	
 	public void draw(Graphics2D e, gamePanel gp) {
 		int screenX = x - gp.player.x + gp.player.screenX;
 		int screenY = y - gp.player.y + gp.player.screenY;
 
-		BufferedImage image = null; 
+		BufferedImage image = null;
 		// Draw the object image if within the player’s screen bounds
-		if (x + gp.tileSize > gp.player.x - gp.player.screenX &&
-			    x - gp.tileSize < gp.player.x + gp.player.screenX &&
-			    y + gp.tileSize > gp.player.y - gp.player.screenY &&
-			    y - gp.tileSize < gp.player.y + gp.player.screenY) {
+		if (x + gp.tileSize > gp.player.x - gp.player.screenX && x - gp.tileSize < gp.player.x + gp.player.screenX
+				&& y + gp.tileSize > gp.player.y - gp.player.screenY
+				&& y - gp.tileSize < gp.player.y + gp.player.screenY) {
 
 			switch (direction) {
 			case "up":
@@ -93,12 +100,11 @@ public void update() {
 				image = (spriteNum == 1) ? right1 : right2;
 				break;
 			}
-			
+
 			e.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
 		}
 	}
-	
-	
+
 	public BufferedImage setPlayer(String imagePath) {
 		UtilityTool uTool = new UtilityTool();
 		BufferedImage image = null;

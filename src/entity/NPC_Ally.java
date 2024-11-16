@@ -10,7 +10,6 @@ import firstPackage.UtilityTool;
 import firstPackage.gamePanel;
 
 public class NPC_Ally extends Entity {
-	
 
 	public NPC_Ally(gamePanel k) {
 		super(k);
@@ -18,6 +17,14 @@ public class NPC_Ally extends Entity {
 		speed = 1;
 
 		getImage();
+		setDialoge();
+	}
+
+	public void setDialoge() {
+		dialogue[0] = "Greetings!";
+		dialogue[1] = "How are you doing?";
+		dialogue[2] = "I hope you are doing well!";
+
 	}
 
 	public void getImage() {
@@ -32,6 +39,30 @@ public class NPC_Ally extends Entity {
 		right2 = setPlayer("/NPC/RightAlly2");
 	}
 
+	public void speak() {
+
+		if (dialogue[dialogueIndex] == null) {
+			dialogueIndex = 0;
+		}
+		k.view.currectDialogue = dialogue[dialogueIndex];
+		dialogueIndex += 1;
+
+		switch (k.player.direction) {
+		case "up":
+			direction= "down";
+			break;
+		case "down":
+			direction= "up";
+			break;
+		case "left":
+			direction= "right";
+			break;
+		case "right":
+			direction= "left";
+			break;
+		}
+	}
+
 	public void setAction() {
 
 		actionLock += 1;
@@ -39,17 +70,17 @@ public class NPC_Ally extends Entity {
 		if (actionLock == 120) {
 			Random r = new Random();
 			int i = r.nextInt(100) + 1; // pick up random Num
-			if (i <= 25 ) {
+			if (i <= 25) {
 				direction = "up";
 			}
-			if (i > 25 && i <= 50 ) {
+			if (i > 25 && i <= 50) {
 				direction = "down";
 			}
-			if (i > 50 && i <= 75 ) {
+			if (i > 50 && i <= 75) {
 				direction = "left";
-				
+
 			}
-			if (i > 75 && i <= 100 ) {
+			if (i > 75 && i <= 100) {
 				direction = "right";
 			}
 
