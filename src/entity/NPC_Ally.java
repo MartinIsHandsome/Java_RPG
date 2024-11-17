@@ -21,9 +21,9 @@ public class NPC_Ally extends Entity {
 	}
 
 	public void setDialoge() {
-		dialogue[0] = "Greetings!";
-		dialogue[1] = "How are you doing?";
-		dialogue[2] = "I hope you are doing well!";
+		dialogue[0] = "Greetings! My dearest of \n human speciments.";
+		dialogue[1] = "How are you doing? I am \n incredibly human. Rawr.";
+		dialogue[2] = "I hope you are doing well, \n and this is what your ";
 
 	}
 
@@ -41,26 +41,7 @@ public class NPC_Ally extends Entity {
 
 	public void speak() {
 
-		if (dialogue[dialogueIndex] == null) {
-			dialogueIndex = 0;
-		}
-		k.view.currectDialogue = dialogue[dialogueIndex];
-		dialogueIndex += 1;
-
-		switch (k.player.direction) {
-		case "up":
-			direction= "down";
-			break;
-		case "down":
-			direction= "up";
-			break;
-		case "left":
-			direction= "right";
-			break;
-		case "right":
-			direction= "left";
-			break;
-		}
+	super.speak();
 	}
 
 	public void setAction() {

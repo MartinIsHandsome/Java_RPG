@@ -94,7 +94,10 @@ public class UI {
 		miniWindow(x, y, wid, high);
 		x += k.tileSize;
 		y += k.tileSize;
-	g2.drawString(currectDialogue,x,y);
+		for (String line : currectDialogue.split("\n")) {
+			g2.drawString(line, x, y);
+			y += k.tileSize;
+		}
 	}
 
 	public void miniWindow(int x, int y, int w, int h) {

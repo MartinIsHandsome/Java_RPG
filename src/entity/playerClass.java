@@ -45,7 +45,7 @@ public class playerClass extends Entity {
 		y = k.tileSize * 8 - k.tileSize;
 		speed = 4;
 		direction = "down";
-		
+
 	}
 
 	public void getPlayerImage() {
@@ -160,10 +160,13 @@ public class playerClass extends Entity {
 	public void collisionWithNPc(int i) {
 		if (i != 999) {
 
-			k.view.showMessage("Брат туй работи страхотно бе,евала!");
-			k.gameState = k.DialogueState;
-			k.Npcs[i].speak();
+			// k.view.showMessage("Брат туй работи страхотно бе,евала!");
+			if (k.keyH.enterText == true) {
+				k.gameState = k.DialogueState;
+				k.Npcs[i].speak();
+			}
 		}
+		k.keyH.enterText= false;
 	}
 
 	public void pickUpObject(int i) {
@@ -229,11 +232,11 @@ public class playerClass extends Entity {
 //		g2.drawImage(image, screenX, screenY, panel.tileSize, panel.tileSize, null);
 
 //		// Draw a semi-transparent blue overlay for the player
-		// g2.setColor(new Color(0, 0, 255, 100)); // Blue with transparency
-		// g2.fillRect(screenX+ solidArea.x, screenY + solidArea.y,
-		// solidArea.height,solidArea.width);
+// g2.setColor(new Color(0, 0, 255, 100)); // Blue with transparency
+// g2.fillRect(screenX+ solidArea.x, screenY + solidArea.y,
+// solidArea.height,solidArea.width);
 
-		// Draw an outline around the player
-		// g2.setColor(Color.BLACK);
-		// g2.fillRect(screenX+ solidArea.x, screenY + solidArea.y,
-		// solidArea.height,solidArea.width);
+// Draw an outline around the player
+// g2.setColor(Color.BLACK);
+// g2.fillRect(screenX+ solidArea.x, screenY + solidArea.y,
+// solidArea.height,solidArea.width);

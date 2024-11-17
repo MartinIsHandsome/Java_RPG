@@ -30,7 +30,7 @@ public class gamePanel extends JPanel implements Runnable {
 	public final int maxWorldRow = 30;
 	public final int maxWorldWidth = tileSize * maxWorldCol;
 	public final int maxWorldHeight = tileSize * maxWorldRow;
-	keyControl keyH = new keyControl(this);
+	public keyControl keyH = new keyControl(this);
 	public collisionChecker checkMe = new collisionChecker(this);
 	tileManager n = new tileManager(this);
 	public assetSetter aSet = new assetSetter(this);

@@ -5,7 +5,7 @@ import java.awt.event.KeyListener;
 
 public class keyControl implements KeyListener {
 
-	public boolean upPress, downPress, leftPress, rightPress;
+	public boolean upPress, downPress, leftPress, rightPress, enterText;
 
 	public boolean checkTime = false;
 	gamePanel gpReal;
@@ -24,10 +24,9 @@ public class keyControl implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
 
-		//play state
-		if(gpReal.gameState == gpReal.playerState) {
-			
-		
+		// play state
+		if (gpReal.gameState == gpReal.playerState) {
+
 			if (keyCode == KeyEvent.VK_W) {
 				upPress = true;
 			}
@@ -43,17 +42,26 @@ public class keyControl implements KeyListener {
 			if (keyCode == KeyEvent.VK_D) {
 				rightPress = true;
 			}
-			
-		}
-		//play state
-		else if(gpReal.gameState == gpReal.DialogueState) {
-				
-					if (keyCode == KeyEvent.VK_ENTER) {
-						gpReal.gameState = gpReal.playerState;
-					}
-				
-				
+			if (keyCode == KeyEvent.VK_P) {
+				if (gpReal.gameState == gpReal.playerState) {
+					gpReal.gameState = gpReal.pauseState;
 				}
+
+			}
+			if (keyCode == KeyEvent.VK_ENTER) {
+				enterText = true;
+
+			}
+
+		}
+		// play state
+		else if (gpReal.gameState == gpReal.DialogueState) {
+
+			if (keyCode == KeyEvent.VK_ENTER) {
+				gpReal.gameState = gpReal.playerState;
+			}
+
+		}
 
 	}
 //			if (keyCode == KeyEvent.VK_P) {
@@ -67,8 +75,6 @@ public class keyControl implements KeyListener {
 //
 //			}
 
-	
-			
 	@Override
 	public void keyReleased(KeyEvent e) {
 		int keyCode = e.getKeyCode();
@@ -93,8 +99,8 @@ public class keyControl implements KeyListener {
 			if (gpReal.gameState == gpReal.playerState) {
 				gpReal.gameState = gpReal.pauseState;
 			}
-			
-			else if(gpReal.gameState == gpReal.pauseState) {
+
+			else if (gpReal.gameState == gpReal.pauseState) {
 				gpReal.gameState = gpReal.playerState;
 			}
 

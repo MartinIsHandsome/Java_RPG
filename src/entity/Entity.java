@@ -28,6 +28,28 @@ public class Entity {
 
 	public void speak() {
 
+
+			if (dialogue[dialogueIndex] == null) {
+				dialogueIndex = 0;
+			}
+			k.view.currectDialogue = dialogue[dialogueIndex];
+			dialogueIndex += 1;
+
+			switch (k.player.direction) {
+			case "up":
+				direction= "down";
+				break;
+			case "down":
+				direction= "up";
+				break;
+			case "left":
+				direction= "right";
+				break;
+			case "right":
+				direction= "left";
+				break;
+			}
+		
 	}
 
 	public Entity(gamePanel k) {
