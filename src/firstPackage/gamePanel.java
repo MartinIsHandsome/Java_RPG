@@ -16,6 +16,7 @@ import tile.tileManager;
 public class gamePanel extends JPanel implements Runnable {
 
 	// Screen settings
+	public final int titleState = 0;
 
 	final int organizedTilesSize = 16; // 16 by 16
 	final int scale = 3;
@@ -43,6 +44,7 @@ public class gamePanel extends JPanel implements Runnable {
 	Thread gameThread;
 
 	public int gameState;
+	public final int menuState = 0;
 	public final int playerState = 1;
 	public final int pauseState = 2;
 	public final int DialogueState = 3;
@@ -101,10 +103,12 @@ public class gamePanel extends JPanel implements Runnable {
 	}
 
 	public void update() {
+		
+		player.updateImpractical();
 		if (gameState == playerState) {
 			// player
 			player.update();
-			
+
 			// Npc
 			for (int i = 0; i < Npcs.length; i++) {
 				if (Npcs[i] != null) {
@@ -127,6 +131,11 @@ public class gamePanel extends JPanel implements Runnable {
 
 		long drawStart = 0;
 		drawStart = System.nanoTime();
+
+		// Title
+		if (gameState == menuState) {
+
+		}
 		// tiles (they are the first layer so the objects are over them)
 		n.draw(g2);
 		// objects (they are in 2nd layer so player is seen over them)
@@ -136,16 +145,22 @@ public class gamePanel extends JPanel implements Runnable {
 			}
 		}
 
-	
 		// player (last so you can see it the best)
 		player.draw(g2);
 
-		// NPC
-		for (int i = 0; i < Npcs.length; i++) {
-			if (Npcs[i] != null) {
-				Npcs[i].draw(g2, this);
-			}
-		}
+		
+
+
+				
+				
+//				// Draw "[E]" if the player is near this NPC
+//				if (i == player.interactingNpcIndex) {
+//					g2.setColor(Color.WHITE);
+//					g2.drawString("[E]", Npcs[i].x - player.x + player.screenX,
+//							Npcs[i].y - player.y + player.screenY - 10);
+//				}
+			
+
 		view.draw(g2);
 
 		if (keyH.checkTime == true) {
@@ -155,6 +170,19 @@ public class gamePanel extends JPanel implements Runnable {
 			g2.drawString("Time:" + averageTime, 12, 400);
 		}
 
+		// NPC drawing in paintComponent or similar rendering method
+		for (int i = 0; i < Npcs.length; i++) {
+			if (Npcs[i] != null) {
+				Npcs[i].draw(g2, this);
+
+				
+				
+				if (i == player.interactingNpcIndex) {
+				    Npcs[i].drawInteractionPrompt(g2, player.x - player.screenX, player.y - player.screenY);
+				}
+			}
+		}
+		
 		g2.dispose();
 	}
 

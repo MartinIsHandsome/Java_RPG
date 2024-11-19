@@ -15,6 +15,7 @@ import firstPackage.keyControl;
 import tile.tile;
 
 public class playerClass extends Entity {
+	public int interactingNpcIndex = -1;
 	keyControl kH;
 	// gamePanel panel;
 	public int hasKey = 0;
@@ -38,6 +39,7 @@ public class playerClass extends Entity {
 		solidArea.height = 16;
 		setDefaultValues();
 		getPlayerImage();
+
 	}
 
 	public void setDefaultValues() {
@@ -89,6 +91,12 @@ public class playerClass extends Entity {
 		return image;
 	}
 
+	public void updateImpractical() {
+		int npcCheck = k.checkMe.checkEntity(this, k.Npcs);
+		// collisionWithNPc(npcCheck);
+		collisionWithNPcForASecond(npcCheck);
+	}
+
 	public void update() {
 
 		if (kH.downPress == true || kH.leftPress == true || kH.rightPress == true || kH.upPress == true) {
@@ -122,6 +130,7 @@ public class playerClass extends Entity {
 
 			int npcCheck = k.checkMe.checkEntity(this, k.Npcs);
 			collisionWithNPc(npcCheck);
+			// collisionWithNPcForASecond(npcCheck);
 			// IF COLLISION IS FALSE, PLAYER CAN MOVE
 			if (collisionOn == false) {
 				switch (direction) {
@@ -157,16 +166,33 @@ public class playerClass extends Entity {
 
 	}
 
+	public void collisionWithNPcForASecond(int i) {
+		if (i != 999) {
+			// k.view.showMessage("Брат туй работи страхотно бе,евала!");
+			interactingNpcIndex = i; // Save the NPC index
+
+		}
+
+		else {
+			interactingNpcIndex = -1; // Reset if no NPC is colliding
+		}
+
+	}
+
 	public void collisionWithNPc(int i) {
 		if (i != 999) {
-
 			// k.view.showMessage("Брат туй работи страхотно бе,евала!");
 			if (k.keyH.enterText == true) {
+
 				k.gameState = k.DialogueState;
 				k.Npcs[i].speak();
 			}
 		}
-		k.keyH.enterText= false;
+
+		else {
+			interactingNpcIndex = -1; // Reset if no NPC is colliding
+		}
+		k.keyH.enterText = false;
 	}
 
 	public void pickUpObject(int i) {

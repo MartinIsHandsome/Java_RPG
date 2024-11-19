@@ -1,5 +1,6 @@
 package entity;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -12,6 +13,7 @@ import firstPackage.gamePanel;
 
 public class Entity {
 	gamePanel k;
+
 	public int x, y;
 	public int speed;
 	public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
@@ -26,34 +28,41 @@ public class Entity {
 	String[] dialogue = new String[20];
 	int dialogueIndex = 0;
 
-	public void speak() {
-
-
-			if (dialogue[dialogueIndex] == null) {
-				dialogueIndex = 0;
-			}
-			k.view.currectDialogue = dialogue[dialogueIndex];
-			dialogueIndex += 1;
-
-			switch (k.player.direction) {
-			case "up":
-				direction= "down";
-				break;
-			case "down":
-				direction= "up";
-				break;
-			case "left":
-				direction= "right";
-				break;
-			case "right":
-				direction= "left";
-				break;
-			}
-		
+	public void drawInteractionPrompt(Graphics2D g2, int offsetX, int offsetY) {
+	    g2.setColor(Color.WHITE);
+	    g2.drawString("[E]", x - offsetX, y - offsetY - 10);
+	    System.out.println("Collision E");
 	}
 
-	public Entity(gamePanel k) {
-		this.k = k;
+	
+	
+	public void speak() {
+
+		if (dialogue[dialogueIndex] == null) {
+			dialogueIndex = 0;
+		}
+		k.view.currectDialogue = dialogue[dialogueIndex];
+		dialogueIndex += 1;
+
+		switch (k.player.direction) {
+		case "up":
+			direction = "down";
+			break;
+		case "down":
+			direction = "up";
+			break;
+		case "left":
+			direction = "right";
+			break;
+		case "right":
+			direction = "left";
+			break;
+		}
+
+	}
+
+	public Entity(gamePanel k1) {
+		this.k = k1;
 	}
 
 	public void setAction() {
@@ -96,6 +105,13 @@ public class Entity {
 
 			spriteCounter = 0;
 		}
+	}
+
+	public void drawCollisionAndEnteringE(Graphics2D e, gamePanel gp) {
+
+		e.setColor(Color.white);
+		e.drawString("[E]", x, y - 30);
+
 	}
 
 	public void draw(Graphics2D e, gamePanel gp) {
