@@ -1,6 +1,7 @@
 package firstPackage;
 
 import entity.NPC_Ally;
+import entity.NPC_Martin;
 import objectCode.OBJ_Boots;
 import objectCode.OBJ_Chest;
 import objectCode.OBJ_Door;
@@ -42,10 +43,26 @@ public class assetSetter {
 		
 	}
 	
+	
+	public void setNPCThatChasesYou() {
+		l.Npcs[0] = new NPC_Ally(l);
+		l.Npcs[0].x = l.tileSize*21;
+		l.Npcs[0].y = l.tileSize*21;
+			
+	}
 	public void setNPC() {
 		l.Npcs[0] = new NPC_Ally(l);
 		l.Npcs[0].x = l.tileSize*21;
 		l.Npcs[0].y = l.tileSize*21;
+		
+//		
+//		l.Npcs[1] = new NPC_Ally(l);
+//		l.Npcs[1].x = l.tileSize*3;
+//		l.Npcs[1].y = l.tileSize*6;
+//		
+//		l.Npcs[2] = new NPC_Martin(l);
+//		l.Npcs[2].x = l.tileSize*9;
+//		l.Npcs[2].y = l.tileSize*13;
 		
 	}
 

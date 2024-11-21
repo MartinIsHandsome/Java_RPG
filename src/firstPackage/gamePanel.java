@@ -70,7 +70,7 @@ public class gamePanel extends JPanel implements Runnable {
 		aSet.setObj();
 		aSet.setNPC();
 		playMusic(0);
-		gameState = playerState;
+		gameState = menuState;
 
 	}
 
@@ -118,7 +118,7 @@ public class gamePanel extends JPanel implements Runnable {
 
 		}
 
-		else if (gameState == pauseState) {
+		 if (gameState == pauseState) {
 			// nothing
 			view.drawPauseScreen();
 		}
@@ -132,12 +132,19 @@ public class gamePanel extends JPanel implements Runnable {
 		long drawStart = 0;
 		drawStart = System.nanoTime();
 
+		if(gameState == menuState){
+			view.draw(g2);
+		}
 		// Title
 		if (gameState == menuState) {
 
 		}
+		
+		else {
 		// tiles (they are the first layer so the objects are over them)
 		n.draw(g2);
+		
+		
 		// objects (they are in 2nd layer so player is seen over them)
 		for (int i = 0; i < obj.length; i++) {
 			if (obj[i] != null) {
@@ -162,7 +169,7 @@ public class gamePanel extends JPanel implements Runnable {
 			
 
 		view.draw(g2);
-
+		}
 		if (keyH.checkTime == true) {
 			long endTime = System.nanoTime();
 			long averageTime = endTime - drawStart;
@@ -184,6 +191,7 @@ public class gamePanel extends JPanel implements Runnable {
 		}
 		
 		g2.dispose();
+		
 	}
 
 	public void playMusic(int i) {

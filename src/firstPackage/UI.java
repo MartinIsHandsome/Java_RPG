@@ -21,6 +21,7 @@ public class UI {
 	double playTime;
 	DecimalFormat format = new DecimalFormat("#0.0");
 	public String currectDialogue = "";
+	public int commandNum = 0;
 
 	public UI(gamePanel p) {
 		this.k = p;
@@ -34,56 +35,121 @@ public class UI {
 		MessageOn = true;
 	}
 
-	public void draw(Graphics2D e) {
-		this.g2 = e;
-		if (GameFinished == true) {
-			e.setFont(new Font("Arial", Font.BOLD, 55));
-			e.setColor(Color.white);
+	public void draw(Graphics2D gp2) {
+		this.g2 = gp2;
+//		if (GameFinished == true) {
+//			e.setFont(new Font("Arial", Font.BOLD, 55));
+//			e.setColor(Color.white);
+//
+//			String text;
+//			int textLength;
+//			int x;
+//			int y;
+//			text = "You won!";
+//			textLength = (int) e.getFontMetrics().getStringBounds(text, e).getWidth();
+//
+//			x = k.screenHeigh / 2 - textLength / 2;
+//			y = k.screenWidgth / 2 - (k.tileSize * 3);
+//			e.drawString(text, x, y);
+//
+//		}
+//
+//		else {
+		gp2.setFont(font_Keys);
+		gp2.setColor(Color.white);
+		gp2.drawImage(keyPicture, k.tileSize / 3, k.tileSize / 3, k.tileSize - 6, k.tileSize - 6, null);
+		gp2.drawString("Key:" + k.player.hasKey, 73, 50);
 
-			String text;
-			int textLength;
-			int x;
-			int y;
-			text = "You won!";
-			textLength = (int) e.getFontMetrics().getStringBounds(text, e).getWidth();
+		playTime += (double) 1 / 60;
+		gp2.drawString("Time:" + format.format(playTime), k.tileSize * 11, 65);
+		if (MessageOn == true) {
 
-			x = k.screenHeigh / 2 - textLength / 2;
-			y = k.screenWidgth / 2 - (k.tileSize * 3);
-			e.drawString(text, x, y);
+			gp2.drawString(messageNoIdea, k.tileSize / 2, k.tileSize * 5);
 
-		}
-
-		else {
-			e.setFont(font_Keys);
-			e.setColor(Color.white);
-			e.drawImage(keyPicture, k.tileSize / 3, k.tileSize / 3, k.tileSize - 6, k.tileSize - 6, null);
-			e.drawString("Key:" + k.player.hasKey, 73, 50);
-
-			playTime += (double) 1 / 60;
-			e.drawString("Time:" + format.format(playTime), k.tileSize * 11, 65);
-			if (MessageOn == true) {
-
-				e.drawString(messageNoIdea, k.tileSize / 2, k.tileSize * 5);
-
-				messageCount += 1;
+			messageCount += 1;
 
 //				if (messageCount >= 120) {
 //					messageCount = 0;
 //					MessageOn = false;
 //				}
-				g2.setFont(font_Keys);
-				g2.setColor(Color.WHITE);
-				if (k.gameState == k.playerState) {
-
-				}
-				if (k.gameState == k.pauseState) {
-					drawPauseScreen();
-				}
-				if (k.gameState == k.DialogueState) {
-					drawScreenDialogue();
-				}
-			}
 		}
+
+		g2.setFont(font_Keys);
+		g2.setColor(Color.WHITE);
+
+		if (k.gameState == k.menuState) {
+			System.out.print("Ok.");
+			drawTitle();
+		}
+		if (k.gameState == k.playerState) {
+
+		}
+		if (k.gameState == k.pauseState) {
+			drawPauseScreen();
+		}
+		if (k.gameState == k.DialogueState) {
+			drawScreenDialogue();
+		}
+	}
+
+	// }
+
+	public void drawTitle() {
+
+		Color darkGreen = new Color(1, 100, 5);
+		g2.setColor(darkGreen);
+		g2.fillRect(0, 0, k.screenWidgth, k.screenHeigh);
+
+		g2.setColor(Color.gray);
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 56F));
+		String title = "[Великото приключение]";
+		int x = getXForCenterText(title);
+
+		int y = k.tileSize * 3;
+
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 56F));
+
+		g2.drawString(title, x, y);
+		String title1 = "[Великото приключение]";
+		int x1 = getXForCenterText(title);
+
+		int y1 = k.tileSize * 3;
+		g2.setColor(Color.white);
+		g2.drawString(title1, x - 3, y - 3);
+
+		x = (k.screenWidgth / 2) - (k.tileSize * 2) / 2;
+		y += k.tileSize * 2;
+		g2.drawImage(k.player.up1, x, y, k.tileSize * 2, k.tileSize * 2, null);
+
+		// Menu
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 35F));
+
+		title = "Нова игра";
+		x = getXForCenterText(title);
+		y += k.tileSize * 4;
+		g2.drawString(title, x, y);
+		if (commandNum == 0) {
+			g2.drawString(">", x - k.tileSize, y);
+
+		}
+		title = "Продължи игра";
+		x = getXForCenterText(title);
+		y += k.tileSize * 2;
+		g2.drawString(title, x, y);
+		if (commandNum == 1) {
+			g2.drawString(">", x - k.tileSize, y);
+
+		}
+
+		title = "Изход";
+		x = getXForCenterText(title);
+		y += k.tileSize * 2;
+		g2.drawString(title, x, y);
+		if (commandNum == 2) {
+			g2.drawString(">", x - k.tileSize, y);
+
+		}
+
 	}
 
 	public void drawScreenDialogue() {

@@ -23,7 +23,35 @@ public class keyControl implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
+		// title select
+		if (gpReal.gameState == gpReal.menuState) {
+			if (keyCode == KeyEvent.VK_W) {
+				gpReal.view.commandNum -= 1;
+				if (gpReal.view.commandNum < 0) {
+					gpReal.view.commandNum = 2;
+				}
+			}
 
+			if (keyCode == KeyEvent.VK_S) {
+				gpReal.view.commandNum += 1;
+
+				if (gpReal.view.commandNum > 2) {
+					gpReal.view.commandNum = 0;
+				}
+			}
+
+			if (keyCode == KeyEvent.VK_ENTER && gpReal.view.commandNum == 0) {
+				gpReal.gameState = gpReal.playerState;
+			}
+			
+			if (keyCode == KeyEvent.VK_ENTER && gpReal.view.commandNum == 1) {
+				gpReal.gameState = gpReal.playerState;
+			}
+			
+			if (keyCode == KeyEvent.VK_ENTER && gpReal.view.commandNum == 2) {
+			System.exit(0);
+			}
+		}
 		// play state
 		if (gpReal.gameState == gpReal.playerState) {
 
