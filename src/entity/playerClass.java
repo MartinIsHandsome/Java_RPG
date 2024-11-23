@@ -122,6 +122,12 @@ public class playerClass extends Entity {
 //				x += speed;
 			}
 
+			
+			
+			//Check event 
+			k.events.CheckEvent();
+			
+			
 			// CHECK FOR COLLISION
 			collisionOn = false;
 			k.checkMe.checkTile(this);

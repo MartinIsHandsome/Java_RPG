@@ -105,7 +105,7 @@ public class UI {
 
 	public void drawPlayerLife() {
 		
-		k.player.life = 5;
+		//k.player.life = 5;
 		int x = k.tileSize / 2;
 		int y = k.tileSize / 2;
 		int i = 0;

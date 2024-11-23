@@ -17,11 +17,11 @@ public class gamePanel extends JPanel implements Runnable {
 
 	// Screen settings
 	public final int titleState = 0;
-
+	public EvenHandler events = new EvenHandler(this);
 	final int organizedTilesSize = 16; // 16 by 16
 	final int scale = 3;
 	public final int tileSize = organizedTilesSize * scale; // 16 * 3 = 48
-	//public superObject  superObject ;
+	// public superObject superObject ;
 	public final int maxScreeX = 16;
 	public final int maxScreenY = 16;
 	public final int screenWidgth = tileSize * maxScreeX;
@@ -103,7 +103,7 @@ public class gamePanel extends JPanel implements Runnable {
 	}
 
 	public void update() {
-		
+
 		player.updateImpractical();
 		if (gameState == playerState) {
 			// player
@@ -118,7 +118,7 @@ public class gamePanel extends JPanel implements Runnable {
 
 		}
 
-		 if (gameState == pauseState) {
+		if (gameState == pauseState) {
 			// nothing
 			view.drawPauseScreen();
 		}
@@ -132,43 +132,36 @@ public class gamePanel extends JPanel implements Runnable {
 		long drawStart = 0;
 		drawStart = System.nanoTime();
 
-		if(gameState == menuState){
+		if (gameState == menuState) {
 			view.draw(g2);
 		}
 		// Title
 		if (gameState == menuState) {
 
 		}
-		
+
 		else {
-		// tiles (they are the first layer so the objects are over them)
-		n.draw(g2);
-		
-		
-		// objects (they are in 2nd layer so player is seen over them)
-		for (int i = 0; i < obj.length; i++) {
-			if (obj[i] != null) {
-				obj[i].draw(g2, this);
+			// tiles (they are the first layer so the objects are over them)
+			n.draw(g2);
+
+			// objects (they are in 2nd layer so player is seen over them)
+			for (int i = 0; i < obj.length; i++) {
+				if (obj[i] != null) {
+					obj[i].draw(g2, this);
+				}
 			}
-		}
 
-		// player (last so you can see it the best)
-		player.draw(g2);
+			// player (last so you can see it the best)
+			player.draw(g2);
 
-		
-
-
-				
-				
 //				// Draw "[E]" if the player is near this NPC
 //				if (i == player.interactingNpcIndex) {
 //					g2.setColor(Color.WHITE);
 //					g2.drawString("[E]", Npcs[i].x - player.x + player.screenX,
 //							Npcs[i].y - player.y + player.screenY - 10);
 //				}
-			
 
-		view.draw(g2);
+			view.draw(g2);
 		}
 		if (keyH.checkTime == true) {
 			long endTime = System.nanoTime();
@@ -182,16 +175,14 @@ public class gamePanel extends JPanel implements Runnable {
 			if (Npcs[i] != null) {
 				Npcs[i].draw(g2, this);
 
-				
-				
 				if (i == player.interactingNpcIndex) {
-				    Npcs[i].drawInteractionPrompt(g2, player.x - player.screenX, player.y - player.screenY);
+					Npcs[i].drawInteractionPrompt(g2, player.x - player.screenX, player.y - player.screenY);
 				}
 			}
 		}
-		
+
 		g2.dispose();
-		
+
 	}
 
 	public void playMusic(int i) {
