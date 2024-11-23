@@ -28,6 +28,11 @@ public class Entity {
 	String[] dialogue = new String[20];
 	int dialogueIndex = 0;
 
+	// character info
+	public int heartMax;
+	public int life;
+	
+	
 	public void drawInteractionPrompt(Graphics2D g2, int offsetX, int offsetY) {
 	    g2.setColor(Color.WHITE);
 	    g2.drawString("[E]", x - offsetX, y - offsetY - 10);

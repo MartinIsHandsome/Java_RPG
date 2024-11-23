@@ -47,7 +47,9 @@ public class playerClass extends Entity {
 		y = k.tileSize * 8 - k.tileSize;
 		speed = 4;
 		direction = "down";
-
+        //Player status 
+		heartMax = 6;
+		life = heartMax;
 	}
 
 	public void getPlayerImage() {

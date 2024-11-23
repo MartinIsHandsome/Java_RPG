@@ -7,12 +7,16 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 
+import objectCode.OBJ_Heart;
 import objectCode.OBJ_Key;
+import objectCode.superObject;
 
 public class UI {
 	gamePanel k;
+	// superObject so;
 	Font font_Keys;
 	Graphics2D g2;
+	BufferedImage heart, heartHalf, heartEmpty;
 	BufferedImage keyPicture;
 	public boolean MessageOn = false;
 	public int messageCount = 0;
@@ -28,6 +32,13 @@ public class UI {
 		font_Keys = new Font("Arial", Font.PLAIN, 40);
 		OBJ_Key key = new OBJ_Key(p);
 		keyPicture = key.look;
+		superObject heartS = new OBJ_Heart(k);
+		heart = heartS.look;
+		heartHalf = heartS.look2;
+		heartEmpty = heartS.look3;
+//		I ran into the same issue. I initialised an instance of the SuperObject class 
+//		as "SuperObject so;" under the "GamePanel gp;" and then I was able to import the SuperObject and OBJ_Heart classes.
+
 	}
 
 	public void showMessage(String n) {
@@ -82,7 +93,7 @@ public class UI {
 			drawTitle();
 		}
 		if (k.gameState == k.playerState) {
-
+			drawPlayerLife();
 		}
 		if (k.gameState == k.pauseState) {
 			drawPauseScreen();
@@ -90,6 +101,37 @@ public class UI {
 		if (k.gameState == k.DialogueState) {
 			drawScreenDialogue();
 		}
+	}
+
+	public void drawPlayerLife() {
+		
+		k.player.life = 5;
+		int x = k.tileSize / 2;
+		int y = k.tileSize / 2;
+		int i = 0;
+
+		while (i < k.player.heartMax / 2) {
+			g2.drawImage(heartEmpty, x, y, null);
+			i += 1;
+			x += k.tileSize;
+		}
+		x = k.tileSize / 2;
+		y = k.tileSize / 2;
+		i = 0;
+
+		// draw painting
+
+		while (i < k.player.life) {
+			g2.drawImage(heartHalf, x, y, null);
+			i += 1;
+			
+			if(i < k.player.life) {
+				g2.drawImage(heart, x, y, null);
+			}
+			i++;
+			x+=k.tileSize;
+		}
+
 	}
 
 	// }

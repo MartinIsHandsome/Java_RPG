@@ -9,7 +9,7 @@ import firstPackage.UtilityTool;
 import firstPackage.gamePanel;
 
 public class superObject {
-	public BufferedImage look;
+	public BufferedImage look,look2,look3;
 
 	public String name;
 	public boolean collision = false;
