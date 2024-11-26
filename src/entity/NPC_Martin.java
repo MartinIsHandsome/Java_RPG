@@ -16,22 +16,22 @@ public class NPC_Martin extends Entity{
 	}
 
 	public void setDialoge() {
-		dialogue[0] = "You speak with me, so now I will be fast.";
-		dialogue[1] = "Stop I will be even faster now.";
-		dialogue[2] = "Well I am super \n fast now-meow. ";
+		dialogue[0] = "Хей аз съм Фин от време за \n приключения!";
+		dialogue[1] = "Сега ще съм бавен. Хех.";
+		dialogue[2] = "Как си иначе ти? \n Всичко топ? ";
 
 	}
 
 	public void getImage() {
 
-		up1 = setPlayer("/NPC/FrontAlly");
-		up2 = setPlayer("/NPC/FrontAlly2");
-		down1 = setPlayer("/NPC/BackAlly");
-		down2 = setPlayer("/NPC/BackAlly2");
-		left1 = setPlayer("/NPC/LeftAlly1");
-		left2 = setPlayer("/NPC/LeftAlly2");
-		right1 = setPlayer("/NPC/RightAlly");
-		right2 = setPlayer("/NPC/RightAlly2");
+		up1 = setPlayer("/NPC/FrontFinn");
+		up2 = setPlayer("/NPC/FrontFinn2");
+		down1 = setPlayer("/NPC/FinnBack");
+		down2 = setPlayer("/NPC/FinnBack2");
+		left1 = setPlayer("/NPC/FinLeftOneCorrect");
+		left2 = setPlayer("/NPC/PinLeftTwoCorrect");
+		right1 = setPlayer("/NPC/FinnRightOne");
+		right2 = setPlayer("/NPC/FinnRightTwo");
 	}
 
 	public void speak() {

@@ -44,10 +44,10 @@ public class assetSetter {
 	}
 	
 	
-	public void setNPCThatChasesYou() {
-		l.Npcs[0] = new NPC_Ally(l);
-		l.Npcs[0].x = l.tileSize*21;
-		l.Npcs[0].y = l.tileSize*21;
+	public void setFinn() {
+		l.Npcs[1] = new NPC_Martin(l);
+		l.Npcs[1].x = l.tileSize*19;
+		l.Npcs[1].y = l.tileSize*23;
 			
 	}
 	public void setNPC() {
