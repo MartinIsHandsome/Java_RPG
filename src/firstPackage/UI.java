@@ -91,6 +91,7 @@ public class UI {
 		if (k.gameState == k.menuState) {
 			System.out.print("Ok.");
 			drawTitle();
+			
 		}
 		if (k.gameState == k.playerState) {
 			drawPlayerLife();

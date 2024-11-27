@@ -1,6 +1,7 @@
 package firstPackage;
 
 import entity.NPC_Ally;
+import entity.NPC_Jake;
 import entity.NPC_Martin;
 import objectCode.OBJ_Boots;
 import objectCode.OBJ_Chest;
@@ -44,6 +45,13 @@ public class assetSetter {
 	}
 	
 	
+	
+	public void setJake() {
+		l.Npcs[2] = new NPC_Jake(l);
+		l.Npcs[2].x = l.tileSize*10;
+		l.Npcs[2].y = l.tileSize*4;
+			
+	}
 	public void setFinn() {
 		l.Npcs[1] = new NPC_Martin(l);
 		l.Npcs[1].x = l.tileSize*19;

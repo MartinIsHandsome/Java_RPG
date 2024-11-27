@@ -70,6 +70,7 @@ public class gamePanel extends JPanel implements Runnable {
 		aSet.setObj();
 		aSet.setNPC();
 		aSet.setFinn();
+		aSet.setJake();
 		playMusic(0);
 		gameState = menuState;
 
@@ -163,7 +164,7 @@ public class gamePanel extends JPanel implements Runnable {
 //				}
 
 			view.draw(g2);
-		}
+		
 		if (keyH.checkTime == true) {
 			long endTime = System.nanoTime();
 			long averageTime = endTime - drawStart;
@@ -181,7 +182,7 @@ public class gamePanel extends JPanel implements Runnable {
 				}
 			}
 		}
-
+		}
 		g2.dispose();
 
 	}
