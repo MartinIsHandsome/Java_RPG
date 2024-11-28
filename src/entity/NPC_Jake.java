@@ -3,10 +3,13 @@ package entity;
 
 	import java.util.Random;
 
-	import firstPackage.gamePanel;
+import firstPackage.assetSetter;
+import firstPackage.gamePanel;
 
 	public class NPC_Jake extends Entity{
-
+ 
+		
+		assetSetter n;
 		public NPC_Jake(gamePanel k1) {
 			super(k1);
 			direction = "down";// TODO Auto-generated constructor stub
@@ -17,12 +20,15 @@ package entity;
 		}
 
 		public void setDialoge() {
-			dialogue[0] = "Хей аз съм Джейк от време за \n приключения! И те следвам сега.";
+			dialogue[0] = "Благодаря ти че ме освободи! \n приключения! Ето ти една енергийна за мерси..";
 			dialogue[1] = "Кликни ме 3 пъти за да спра.";
 			dialogue[2] = "Ох шаро. \n Как сме? ";
-
+			
 		}
 
+		
+	
+		
 		public void getImage() {
 
 			up1 = setPlayer("/NPC/FrontJake1");
@@ -38,7 +44,10 @@ package entity;
 		public void speak() {
 
 		super.speak();
-		
+
+		super.choice =1;
+		super.setAction();
+
 		}
 
 		public void setAction() {

@@ -58,7 +58,7 @@ public class playerClass extends Entity {
 		up2 = setPlayer("/player/Front2");
 		down1 = setPlayer("/player/Back");
 		down2 = setPlayer("/player/Back2");
-		left1 = setPlayer("/player/Left2");
+		left1 = setPlayer("/player/Left");
 		left2 = setPlayer("/player/Left2");
 		right1 = setPlayer("/player/Right");
 		right2 = setPlayer("/player/Right2");

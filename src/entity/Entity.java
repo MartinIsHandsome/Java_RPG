@@ -9,12 +9,17 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import firstPackage.UtilityTool;
+import firstPackage.assetSetter;
 import firstPackage.gamePanel;
 
 public class Entity {
 	gamePanel k;
 
 	public int x, y;
+public int choice =0;
+   public assetSetter setter;
+	
+	
 	public int speed;
 	public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
 	public String direction;
@@ -25,22 +30,20 @@ public class Entity {
 	public int solidAreaDefaultX, solidAreaDefaultY;
 	public boolean collisionOn = false;
 	public int actionLock = 0;
+
 	String[] dialogue = new String[20];
 	int dialogueIndex = 0;
 
 	// character info
 	public int heartMax;
 	public int life;
-	
-	
+
 	public void drawInteractionPrompt(Graphics2D g2, int offsetX, int offsetY) {
-	    g2.setColor(Color.WHITE);
-	    g2.drawString("[E]", x - offsetX, y - offsetY - 10);
-	    System.out.println("Collision E");
+		g2.setColor(Color.WHITE);
+		g2.drawString("[E]", x - offsetX, y - offsetY - 10);
+		System.out.println("Collision E");
 	}
 
-	
-	
 	public void speak() {
 
 		if (dialogue[dialogueIndex] == null) {
@@ -68,11 +71,17 @@ public class Entity {
 
 	public Entity(gamePanel k1) {
 		this.k = k1;
+		setter = new assetSetter(k1);
 	}
 
 	public void setAction() {
+		//this.k =k1;
+		if(choice==0) {setter.setEnergyDrink();}
 
-	}
+		if(choice==1) {setter.setQuestForFinn();}
+		}
+	
+	
 
 	public void update() {
 		setAction();

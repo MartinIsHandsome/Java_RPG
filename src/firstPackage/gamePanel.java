@@ -115,6 +115,7 @@ public class gamePanel extends JPanel implements Runnable {
 			for (int i = 0; i < Npcs.length; i++) {
 				if (Npcs[i] != null) {
 					Npcs[i].update();
+					
 				}
 			}
 
