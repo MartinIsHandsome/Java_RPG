@@ -48,7 +48,7 @@ public class assetSetter {
 		l.obj[3].worldX = 15 * l.tileSize;
 		l.obj[3].worldY = 1 * l.tileSize;
 
-		l.obj[4] = new OBJ_Chest(l);
+		l.obj[4] = new OBJ_Door(l);
 		l.obj[4].worldX = 7 * l.tileSize;
 		l.obj[4].worldY = 5 * l.tileSize;
 

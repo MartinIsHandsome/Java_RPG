@@ -79,10 +79,10 @@ public class UI {
 
 			messageCount += 1;
 
-//				if (messageCount >= 120) {
-//					messageCount = 0;
-//					MessageOn = false;
-//				}
+				if (messageCount >= 120) {
+					messageCount = 0;
+					MessageOn = false;
+				}
 		}
 
 		g2.setFont(font_Keys);
@@ -169,7 +169,7 @@ public class UI {
 
 		title = "Нова игра";
 		x = getXForCenterText(title);
-		y += k.tileSize * 4;
+		y += k.tileSize * 2;
 		g2.drawString(title, x, y);
 		if (commandNum == 0) {
 			g2.drawString(">", x - k.tileSize, y);
@@ -177,7 +177,7 @@ public class UI {
 		}
 		title = "Продължи игра";
 		x = getXForCenterText(title);
-		y += k.tileSize * 2;
+		y += k.tileSize * 1;
 		g2.drawString(title, x, y);
 		if (commandNum == 1) {
 			g2.drawString(">", x - k.tileSize, y);
@@ -186,7 +186,7 @@ public class UI {
 
 		title = "Изход";
 		x = getXForCenterText(title);
-		y += k.tileSize * 2;
+		y += k.tileSize * 1;
 		g2.drawString(title, x, y);
 		if (commandNum == 2) {
 			g2.drawString(">", x - k.tileSize, y);
@@ -195,6 +195,21 @@ public class UI {
 
 	}
 
+	public void drawScreenDialogueOneOnly(String s) {
+		int x = k.tileSize * 2;
+		int y = k.tileSize / 2;
+		int wid = k.screenWidgth - (k.tileSize * 4);
+		int high = k.screenHeigh / 5;
+		miniWindow(x, y, wid, high);
+		x += k.tileSize;
+		y += k.tileSize;
+		for (String line : currectDialogue.split("\n")) {
+			g2.drawString(line, x, y);
+			y += k.tileSize;
+		}
+		}
+	
+		
 	public void drawScreenDialogue() {
 		int x = k.tileSize * 2;
 		int y = k.tileSize / 2;

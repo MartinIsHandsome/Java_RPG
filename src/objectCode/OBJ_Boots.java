@@ -17,5 +17,10 @@ public class OBJ_Boots extends superObject {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+
 	}
+
+	
+
 }

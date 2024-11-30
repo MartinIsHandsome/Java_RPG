@@ -10,6 +10,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import firstPackage.UtilityTool;
+import firstPackage.assetSetter;
 import firstPackage.gamePanel;
 import firstPackage.keyControl;
 import tile.tile;
@@ -17,6 +18,7 @@ import tile.tile;
 public class playerClass extends Entity {
 	public int interactingNpcIndex = -1;
 	keyControl kH;
+	assetSetter n;
 	// gamePanel panel;
 	public int hasKey = 0;
 	public final int screenX;
@@ -39,6 +41,18 @@ public class playerClass extends Entity {
 		solidArea.height = 16;
 		setDefaultValues();
 		getPlayerImage();
+		setDialoge();
+
+	}
+
+	public void speak() {
+
+		super.speak();
+
+	}
+
+	public void setDialoge() {
+		dialogue[0] = "Хммм врата е заключена, явно ми трябва \n някакъв ключ, чудя се къде ли се намира?";
 
 	}
 
@@ -47,7 +61,7 @@ public class playerClass extends Entity {
 		y = k.tileSize * 8 - k.tileSize;
 		speed = 4;
 		direction = "down";
-        //Player status 
+		// Player status
 		heartMax = 6;
 		life = heartMax;
 	}
@@ -122,12 +136,9 @@ public class playerClass extends Entity {
 //				x += speed;
 			}
 
-			
-			
-			//Check event 
+			// Check event
 			k.events.CheckEvent();
-			
-			
+
 			// CHECK FOR COLLISION
 			collisionOn = false;
 			k.checkMe.checkTile(this);
@@ -222,7 +233,17 @@ public class playerClass extends Entity {
 				if (hasKey > 0) {
 					hasKey -= 1;
 					k.obj[i] = null;
+
 				}
+
+				else if (hasKey == 0) {
+					// k.view.
+					k.gameState = k.DialogueState;
+					k.view.currectDialogue = "Тази врата е заключена. \n Ще ми ключ.";
+					k.view.drawScreenDialogueOneOnly("");
+					// System.out.println("fag can't code.");
+				}
+
 				System.out.println("You got Door! F!");
 				break;
 			case "Drink":

@@ -50,14 +50,21 @@ public class EvenHandler {
 			damagePit(4,4,k.DialogueState);
 			System.out.println("Your health:" + k.player.life);
 		}
+		
+		if(hit(10,9,"up") == true) {
+			messageWrite(10,9,k.DialogueState,"Това място ми се струва познато...");
+		}
+		if(hit(15,14,"right") == true) {
+			messageWrite(15,14,k.DialogueState,"Ама играта е страхотна!");
+		}
 	}
 
 	public boolean hit(int col, int row, String req) {
 
 		boolean hit = false;
-		k.player.solidArea.x = k.player.x + k.player.solidArea.x;
+		k.player.solidArea.x = k.player.x + k.player.solidArea.x + 10;
 
-		k.player.solidArea.y = k.player.y + k.player.solidArea.y;
+		k.player.solidArea.y = k.player.y + k.player.solidArea.y  + 10;
 
 		rect[col][row].x = col * k.tileSize + rect[col][row].x;
 		rect[col][row].y = row * k.tileSize + rect[col][row].eventRectThisY;
@@ -85,6 +92,17 @@ public class EvenHandler {
 		
 		rect[col][row].eventDone = true;//it works only once.ddddd
 	}
+	
+
+	public void messageWrite(int col,int row, int gameStae,String writeMessageHere) {
+		k.gameState = gameStae;
+		k.view.currectDialogue = "Гери:"+writeMessageHere;
+		//k.player.life -= 1;
+		
+		
+		rect[col][row].eventDone = true;//it works only once.ddddd
+	}
+
 
 	public void HealPit(int col,int row, int gameStae) {
 		

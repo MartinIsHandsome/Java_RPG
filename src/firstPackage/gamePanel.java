@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
@@ -22,18 +25,20 @@ public class gamePanel extends JPanel implements Runnable {
 	final int scale = 3;
 	public final int tileSize = organizedTilesSize * scale; // 16 * 3 = 48
 	// public superObject superObject ;
-	public final int maxScreeX = 16;
-	public final int maxScreenY = 16;
+	public final int maxScreeX = 20;
+	public final int maxScreenY = 12;
 	public final int screenWidgth = tileSize * maxScreeX;
 	public final int screenHeigh = tileSize * maxScreenY;
-
-	public final int maxWorldCol = 30;
-	public final int maxWorldRow = 30;
+	// Full screen code
+	int screenWidth2 = screenWidgth;
+	int screenHeigh2 = screenHeigh;
+	BufferedImage tempScreen;	Graphics2D g2;
+	public final int maxWorldCol = 50;	public final int maxWorldRow = 50;
 	public final int maxWorldWidth = tileSize * maxWorldCol;
 	public final int maxWorldHeight = tileSize * maxWorldRow;
 	public keyControl keyH = new keyControl(this);
 	public collisionChecker checkMe = new collisionChecker(this);
-	tileManager n = new tileManager(this);
+	public tileManager n = new tileManager(this);
 	public assetSetter aSet = new assetSetter(this);
 	public playerClass player = new playerClass(keyH, this);
 	public superObject obj[] = new superObject[10];
@@ -71,8 +76,72 @@ public class gamePanel extends JPanel implements Runnable {
 		aSet.setNPC();
 		aSet.setFinn();
 		aSet.setJake();
-		playMusic(0);
+		//playMusic(0);
 		gameState = menuState;
+		tempScreen = new BufferedImage(screenWidgth, screenHeigh, BufferedImage.TYPE_INT_ARGB);
+		g2 = (Graphics2D)tempScreen.getGraphics();
+		setFullScreen();
+
+	}
+
+	public void drawTempScreen() {
+
+		long drawStart = 0;
+		drawStart = System.nanoTime();
+
+		
+		if(gameState != menuState) {
+
+			// tiles (they are the first layer so the objects are over them)
+			n.draw(g2);
+
+			// objects (they are in 2nd layer so player is seen over them)
+			for (int i = 0; i < obj.length; i++) {
+				if (obj[i] != null) {
+					obj[i].draw(g2, this);
+				}
+			}
+
+			// player (last so you can see it the best)
+			player.draw(g2);
+
+//			// Draw "[E]" if the player is near this NPC
+//			if (i == player.interactingNpcIndex) {
+//				g2.setColor(Color.WHITE);
+//				g2.drawString("[E]", Npcs[i].x - player.x + player.screenX,
+//						Npcs[i].y - player.y + player.screenY - 10);
+//			}
+
+			view.draw(g2);
+
+			if (keyH.checkTime == true) {
+				long endTime = System.nanoTime();
+				long averageTime = endTime - drawStart;
+				System.out.println("Time:" + averageTime);
+				g2.drawString("Time:" + averageTime, 12, 400);
+			}
+
+			// NPC drawing in paintComponent or similar rendering method
+			for (int i = 0; i < Npcs.length; i++) {
+				if (Npcs[i] != null) {
+					Npcs[i].draw(g2, this);
+
+					if (i == player.interactingNpcIndex) {
+						Npcs[i].drawInteractionPrompt(g2, player.x - player.screenX, player.y - player.screenY);
+					}
+				}
+			}
+		
+		}
+		if (gameState == menuState) {
+			view.draw(g2);
+		}
+		// Title
+		if (gameState == menuState) {
+
+		}
+
+
 
 	}
 
@@ -84,8 +153,9 @@ public class gamePanel extends JPanel implements Runnable {
 		int drawCount = 0;
 		while (gameThread != null) {
 			update();
-			repaint();
-
+			// repaint();
+			drawTempScreen();
+			DrawToScreen();
 			try {
 				double remainingTime = nextDrawTime - System.nanoTime();
 				remainingTime = remainingTime / 1000000;
@@ -115,9 +185,17 @@ public class gamePanel extends JPanel implements Runnable {
 			for (int i = 0; i < Npcs.length; i++) {
 				if (Npcs[i] != null) {
 					Npcs[i].update();
-					
+
 				}
 			}
+
+// OBJ
+//			for (int i = 0; i < obj.length; i++) {
+//				if (obj[i] != null) {
+//					obj[i].update();
+//					
+//				}
+//			}
 
 		}
 
@@ -127,65 +205,83 @@ public class gamePanel extends JPanel implements Runnable {
 		}
 	}
 
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
+	public void setFullScreen() {
+		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		GraphicsDevice dg = ge.getDefaultScreenDevice();
+		dg.setFullScreenWindow(main.window);
 
-		Graphics2D g2 = (Graphics2D) g;
-
-		long drawStart = 0;
-		drawStart = System.nanoTime();
-
-		if (gameState == menuState) {
-			view.draw(g2);
-		}
-		// Title
-		if (gameState == menuState) {
-
-		}
-
-		else {
-			// tiles (they are the first layer so the objects are over them)
-			n.draw(g2);
-
-			// objects (they are in 2nd layer so player is seen over them)
-			for (int i = 0; i < obj.length; i++) {
-				if (obj[i] != null) {
-					obj[i].draw(g2, this);
-				}
-			}
-
-			// player (last so you can see it the best)
-			player.draw(g2);
-
-//				// Draw "[E]" if the player is near this NPC
-//				if (i == player.interactingNpcIndex) {
-//					g2.setColor(Color.WHITE);
-//					g2.drawString("[E]", Npcs[i].x - player.x + player.screenX,
-//							Npcs[i].y - player.y + player.screenY - 10);
+		screenWidth2 = main.window.getWidth();
+		screenHeigh2 = main.window.getHeight();
+	}
+	
+	
+//	public void paintComponent(Graphics g) {
+//		super.paintComponent(g);
+//
+//		Graphics2D g2 = (Graphics2D) g;
+//
+//		long drawStart = 0;
+//		drawStart = System.nanoTime();
+//
+//		if (gameState == menuState) {
+//			view.draw(g2);
+//		}
+//		// Title
+//		if (gameState == menuState) {
+//
+//		}
+//
+//		else {
+//			// tiles (they are the first layer so the objects are over them)
+//			n.draw(g2);
+//
+//			// objects (they are in 2nd layer so player is seen over them)
+//			for (int i = 0; i < obj.length; i++) {
+//				if (obj[i] != null) {
+//					obj[i].draw(g2, this);
 //				}
+//			}
+//
+//			// player (last so you can see it the best)
+//			player.draw(g2);
+//
+////				// Draw "[E]" if the player is near this NPC
+////				if (i == player.interactingNpcIndex) {
+////					g2.setColor(Color.WHITE);
+////					g2.drawString("[E]", Npcs[i].x - player.x + player.screenX,
+////							Npcs[i].y - player.y + player.screenY - 10);
+////				}
+//
+//			view.draw(g2);
+//
+//			if (keyH.checkTime == true) {
+//				long endTime = System.nanoTime();
+//				long averageTime = endTime - drawStart;
+//				System.out.println("Time:" + averageTime);
+//				g2.drawString("Time:" + averageTime, 12, 400);
+//			}
+//
+//			// NPC drawing in paintComponent or similar rendering method
+//			for (int i = 0; i < Npcs.length; i++) {
+//				if (Npcs[i] != null) {
+//					Npcs[i].draw(g2, this);
+//
+//					if (i == player.interactingNpcIndex) {
+//						Npcs[i].drawInteractionPrompt(g2, player.x - player.screenX, player.y - player.screenY);
+//					}
+//				}
+//			}
+//		}
+//		g2.dispose();
+//
+//	}
+//
 
-			view.draw(g2);
-		
-		if (keyH.checkTime == true) {
-			long endTime = System.nanoTime();
-			long averageTime = endTime - drawStart;
-			System.out.println("Time:" + averageTime);
-			g2.drawString("Time:" + averageTime, 12, 400);
-		}
+	public void DrawToScreen() {
+		Graphics d = getGraphics();
 
-		// NPC drawing in paintComponent or similar rendering method
-		for (int i = 0; i < Npcs.length; i++) {
-			if (Npcs[i] != null) {
-				Npcs[i].draw(g2, this);
-
-				if (i == player.interactingNpcIndex) {
-					Npcs[i].drawInteractionPrompt(g2, player.x - player.screenX, player.y - player.screenY);
-				}
-			}
-		}
-		}
-		g2.dispose();
-
+		d.drawImage(tempScreen, 0, 0, screenWidth2, screenHeigh2, null);
+		d.dispose();
 	}
 
 	public void playMusic(int i) {

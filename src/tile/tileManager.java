@@ -21,8 +21,10 @@ public class tileManager {
 
 	public tileManager(gamePanel gp) {
 		this.gp = gp;
-		tile = new tile[10];
+		tile = new tile[100];// tiles types
 		mapTilesNum = new int[gp.maxWorldCol][gp.maxWorldRow];
+
+		
 		getTileImage();
 		loadingInTheMap("/maps/mapo1.txt");
 	}
@@ -40,9 +42,23 @@ public class tileManager {
 //			tile[2].image = ImageIO.read(getClass().getResourceAsStream("/BackGround/sea.png"));
 //			tile[2].collision = true;
 
-			setUpScale(0,"grass",false);
-			setUpScale(1,"RockTile",true);
-			setUpScale(2,"sea",true);
+			setUpScale(0,"grassTile",false);
+			setUpScale(1,"wall",true);
+			setUpScale(2,"water00",true);
+			setUpScale(3,"road00",false);
+			setUpScale(4,"road01",false);
+			setUpScale(5,"road02",false);
+			setUpScale(6,"road03",false);
+			setUpScale(7,"road04",false);
+			setUpScale(8,"road05",false);
+			setUpScale(9,"road06",false);
+			setUpScale(10,"road07",false);
+			setUpScale(11,"road08",false);
+			setUpScale(12,"road09",false);
+			setUpScale(13,"road10",false);
+			setUpScale(14,"road11",false);
+			setUpScale(15,"road12",false);
+			
 //		} catch (IOException e) {
 //			e.printStackTrace();
 //		}
@@ -69,20 +85,22 @@ public class tileManager {
 			BufferedReader br = new BufferedReader(new InputStreamReader(is));
 			int col = 0;
 			int row = 0;
-			while (col < gp.maxWorldCol && row < gp.maxWorldRow) {
-				String line = br.readLine();
-				while (col < gp.maxWorldCol) {
-					String nums[] = line.split(" ");
-					int num = Integer.parseInt(nums[col]);
-					mapTilesNum[col][row] = num;
-					col += 1;
-				}
-
-				if (col == gp.maxWorldRow) {
-					col = 0;
-					row += 1;
-				}
+			while (row < gp.maxWorldRow) {
+			    String line = br.readLine();
+			    String[] nums = line.split(" ");
+			    for (col = 0; col < gp.maxWorldCol; col++) {
+			        if (col < nums.length) {
+			            int num = Integer.parseInt(nums[col]);
+			            mapTilesNum[col][row] = num;
+			        } else {
+			            // Handle missing columns in the map file if necessary
+			            mapTilesNum[col][row] = 0; // Default tile
+			        }
+			    }
+			    row++;
 			}
+
+			
 		}
 
 		catch (Exception e) {
@@ -108,13 +126,13 @@ public class tileManager {
 					&& worldY + gp.tileSize > gp.player.y - gp.player.screenY) {
 				e.drawImage(tile[tilesR].image, screenX, screenY, null);
 
-				// Draw a semi-transparent overlay on each tile
-//            e.setColor(new Color(255, 0, 0, 100)); // Red with transparency
-//            e.fillRect(screenX, screenY, gp.tileSize, gp.tileSize);
-//
-//            // Draw an outline around each tile
-//            e.setColor(Color.BLACK);
-//            e.drawRect(screenX, screenY, gp.tileSize, gp.tileSize);
+//				 Draw a semi-transparent overlay on each tile
+	            e.setColor(new Color(255, 0, 0, 100)); // Red with transparency
+	            e.fillRect(screenX, screenY, gp.tileSize, gp.tileSize);
+	
+	            // Draw an outline around each tile
+	            e.setColor(Color.BLACK);
+	            e.drawRect(screenX, screenY, gp.tileSize, gp.tileSize);
 			}
 
 			col++;
@@ -126,3 +144,12 @@ public class tileManager {
 		}
 	}
 }
+		
+				
+				// Draw a semi-transparent overlay on each tile
+//            e.setColor(new Color(255, 0, 0, 100)); // Red with transparency
+//            e.fillRect(screenX, screenY, gp.tileSize, gp.tileSize);
+//
+//            // Draw an outline around each tile
+//            e.setColor(Color.BLACK);
+//            e.drawRect(screenX, screenY, gp.tileSize, gp.tileSize);

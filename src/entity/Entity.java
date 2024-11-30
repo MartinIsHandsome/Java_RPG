@@ -43,7 +43,8 @@ public int choice =0;
 		g2.drawString("[E]", x - offsetX, y - offsetY - 10);
 		System.out.println("Collision E");
 	}
-
+	
+	
 	public void speak() {
 
 		if (dialogue[dialogueIndex] == null) {
@@ -68,6 +69,10 @@ public int choice =0;
 		}
 
 	}
+	
+	
+
+	
 
 	public Entity(gamePanel k1) {
 		this.k = k1;

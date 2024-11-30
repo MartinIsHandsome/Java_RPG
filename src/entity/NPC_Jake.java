@@ -10,6 +10,8 @@ import firstPackage.gamePanel;
  
 		
 		assetSetter n;
+		
+		
 		public NPC_Jake(gamePanel k1) {
 			super(k1);
 			direction = "down";// TODO Auto-generated constructor stub
@@ -45,7 +47,7 @@ import firstPackage.gamePanel;
 
 		super.speak();
 
-		super.choice =1;
+		super.choice =0;
 		super.setAction();
 
 		}

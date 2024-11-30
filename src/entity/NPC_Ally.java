@@ -29,14 +29,14 @@ public class NPC_Ally extends Entity {
 
 	public void getImage() {
 
-		up1 = setPlayer("/NPC/FrontAlly");
-		up2 = setPlayer("/NPC/FrontAlly2");
-		down1 = setPlayer("/NPC/BackAlly");
-		down2 = setPlayer("/NPC/BackAlly2");
-		left1 = setPlayer("/NPC/LeftAlly1");
-		left2 = setPlayer("/NPC/LeftAlly2");
-		right1 = setPlayer("/NPC/RightAlly");
-		right2 = setPlayer("/NPC/RightAlly2");
+		up1 = setPlayer("/NPC/IceKingFront1");
+		up2 = setPlayer("/NPC/IceKingFront2");
+		down1 = setPlayer("/NPC/IceKingBack1");
+		down2 = setPlayer("/NPC/IceKingBack2");
+		left1 = setPlayer("/NPC/IceKingLeft1");
+		left2 = setPlayer("/NPC/IceKingLeft2");
+		right1 = setPlayer("/NPC/IceKingRight");
+		right2 = setPlayer("/NPC/IceKingRight2");
 	}
 
 	public void speak() {
