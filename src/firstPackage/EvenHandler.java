@@ -11,26 +11,19 @@ public class EvenHandler {
 
 		rect = new EventRect[k.maxWorldCol][k.maxWorldRow];
 
-		int col = 0;
-
-		int row = 0;
-
-		while (col < k.maxWorldCol && row < k.maxWorldRow) {
-
-			rect[col][row] = new EventRect();
-			rect[col][row].x = 23;
-			rect[col][row].y = 23;
-			rect[col][row].height = 10;
-			rect[col][row].width = 10;
-			rect[col][row].eventRectThisX = rect[col][row].x;
-			rect[col][row].eventRectThisY = rect[col][row].y;
-			col += 1;
-
-			if (col == k.maxWorldCol) {
-				col = 0;
-				row += 1;
-			}
+	
+		for (int col = 0; col < k.maxWorldCol; col++) {
+		    for (int row = 0; row < k.maxWorldRow; row++) {
+		        rect[col][row] = new EventRect();
+		        rect[col][row].x = 23;
+		        rect[col][row].y = 23;
+		        rect[col][row].height = 10;
+		        rect[col][row].width = 10;
+		        rect[col][row].eventRectThisX = rect[col][row].x;
+		        rect[col][row].eventRectThisY = rect[col][row].y;
+		    }
 		}
+
 	}
 
 	public void CheckEvent() {

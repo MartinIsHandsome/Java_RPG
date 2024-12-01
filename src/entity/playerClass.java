@@ -57,8 +57,8 @@ public class playerClass extends Entity {
 	}
 
 	public void setDefaultValues() {
-		x = k.tileSize * 8 - k.tileSize;
-		y = k.tileSize * 8 - k.tileSize;
+		x = k.tileSize * 22 - k.tileSize;
+		y = k.tileSize * 23 - k.tileSize;
 		speed = 4;
 		direction = "down";
 		// Player status

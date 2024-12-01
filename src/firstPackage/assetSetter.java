@@ -46,7 +46,7 @@ public class assetSetter {
 
 		l.obj[3] = new OBJ_Door(l);
 		l.obj[3].worldX = 15 * l.tileSize;
-		l.obj[3].worldY = 1 * l.tileSize;
+		l.obj[3].worldY = 5 * l.tileSize;
 
 		l.obj[4] = new OBJ_Door(l);
 		l.obj[4].worldX = 7 * l.tileSize;
@@ -61,7 +61,7 @@ public class assetSetter {
 	public void setJake() {
 		l.Npcs[2] = new NPC_Jake(l);
 		l.Npcs[2].x = l.tileSize * 10;
-		l.Npcs[2].y = l.tileSize * 4;
+		l.Npcs[2].y = l.tileSize * 8;
 
 	}
 

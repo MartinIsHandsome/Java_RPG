@@ -32,8 +32,11 @@ public class gamePanel extends JPanel implements Runnable {
 	// Full screen code
 	int screenWidth2 = screenWidgth;
 	int screenHeigh2 = screenHeigh;
-	BufferedImage tempScreen;	Graphics2D g2;
-	public final int maxWorldCol = 50;	public final int maxWorldRow = 50;
+	BufferedImage tempScreen;
+	Graphics2D g2;
+	public int maxWorldCol = 100;
+	public int maxWorldRow = 100;
+
 	public final int maxWorldWidth = tileSize * maxWorldCol;
 	public final int maxWorldHeight = tileSize * maxWorldRow;
 	public keyControl keyH = new keyControl(this);
@@ -58,6 +61,10 @@ public class gamePanel extends JPanel implements Runnable {
 	// int speed = 4;
 
 	public gamePanel() {
+		this.maxWorldCol = 100; // Set default values
+		this.maxWorldRow = 100; // Set default values
+		this.events = new EvenHandler(this); // Initialize after setting dimensions
+
 		this.setPreferredSize(new Dimension(screenWidgth, screenHeigh));
 		this.setBackground(Color.BLACK);
 		this.setDoubleBuffered(true);
@@ -76,10 +83,10 @@ public class gamePanel extends JPanel implements Runnable {
 		aSet.setNPC();
 		aSet.setFinn();
 		aSet.setJake();
-		//playMusic(0);
+		// playMusic(0);
 		gameState = menuState;
 		tempScreen = new BufferedImage(screenWidgth, screenHeigh, BufferedImage.TYPE_INT_ARGB);
-		g2 = (Graphics2D)tempScreen.getGraphics();
+		g2 = (Graphics2D) tempScreen.getGraphics();
 		setFullScreen();
 
 	}
@@ -89,8 +96,7 @@ public class gamePanel extends JPanel implements Runnable {
 		long drawStart = 0;
 		drawStart = System.nanoTime();
 
-		
-		if(gameState != menuState) {
+		if (gameState != menuState) {
 
 			// tiles (they are the first layer so the objects are over them)
 			n.draw(g2);
@@ -131,7 +137,7 @@ public class gamePanel extends JPanel implements Runnable {
 					}
 				}
 			}
-		
+
 		}
 		if (gameState == menuState) {
 			view.draw(g2);
@@ -140,8 +146,6 @@ public class gamePanel extends JPanel implements Runnable {
 		if (gameState == menuState) {
 
 		}
-
-
 
 	}
 
@@ -213,8 +217,7 @@ public class gamePanel extends JPanel implements Runnable {
 		screenWidth2 = main.window.getWidth();
 		screenHeigh2 = main.window.getHeight();
 	}
-	
-	
+
 //	public void paintComponent(Graphics g) {
 //		super.paintComponent(g);
 //
