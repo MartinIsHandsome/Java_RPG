@@ -23,8 +23,18 @@ public class playerClass extends Entity {
 	public int hasKey = 0;
 	public final int screenX;
 	public final int screenY;
+public boolean [] achievements = {false,false,false,false,false,false};
+int achievemntCount = achievements.length;
 
-	public playerClass(keyControl kH, gamePanel panel) {
+
+public void CountAchivementsUnlocked() {
+	for(int i=0;i<achievements.length;i++) {
+		if(achievements[i]==true) {
+			achievemntCount+=1;
+		}
+	}
+}
+public playerClass(keyControl kH, gamePanel panel) {
 		super(panel);
 		this.kH = kH;
 		// this.panel = panel;
@@ -57,8 +67,8 @@ public class playerClass extends Entity {
 	}
 
 	public void setDefaultValues() {
-		x = k.tileSize * 22 - k.tileSize;
-		y = k.tileSize * 23 - k.tileSize;
+		x = k.tileSize * 12 - k.tileSize;
+		y = k.tileSize * 16 - k.tileSize;
 		speed = 4;
 		direction = "down";
 		// Player status
@@ -227,6 +237,7 @@ public class playerClass extends Entity {
 			case "Key":
 				hasKey += 1;
 				k.obj[i] = null;
+				k.playSE(3);
 				k.view.showMessage("Ти взе ключ!");
 				break;
 			case "Door":
@@ -240,6 +251,7 @@ public class playerClass extends Entity {
 					// k.view.
 					k.gameState = k.DialogueState;
 					k.view.currectDialogue = "Тази врата е заключена. \n Ще ми ключ.";
+					k.playSE(2);
 					k.view.drawScreenDialogueOneOnly("");
 					// System.out.println("fag can't code.");
 				}
@@ -257,6 +269,15 @@ public class playerClass extends Entity {
 				k.stopMusic();
 				k.playSE(1);
 				// System.out.println("You got Door! F!");
+				break;
+			case "LockDoor":
+			k.player.collisionOn=true;
+			break;
+			case "Toilet":
+				k.player.collisionOn=true;
+				achievements[0]=true;
+				CountAchivementsUnlocked();
+				k.view.showMessage("[Спомен открит! Ти намери "+achievemntCount+" от "+ achievements.length+"]");
 				break;
 			}
 		}

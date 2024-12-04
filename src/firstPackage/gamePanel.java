@@ -36,7 +36,10 @@ public class gamePanel extends JPanel implements Runnable {
 	Graphics2D g2;
 	public int maxWorldCol = 100;
 	public int maxWorldRow = 100;
-
+	
+	public final int maxMap = 10;
+	public int currentMap = 0;
+	
 	public final int maxWorldWidth = tileSize * maxWorldCol;
 	public final int maxWorldHeight = tileSize * maxWorldRow;
 	public keyControl keyH = new keyControl(this);
@@ -50,6 +53,8 @@ public class gamePanel extends JPanel implements Runnable {
 	soundController BackgroundMusic = new soundController();
 	public UI view = new UI(this);
 	Thread gameThread;
+	
+	
 
 	public int gameState;
 	public final int menuState = 0;
@@ -80,9 +85,10 @@ public class gamePanel extends JPanel implements Runnable {
 
 	public void setUpGame() {
 		aSet.setObj();
-		aSet.setNPC();
-		aSet.setFinn();
+//		aSet.setNPC();
+//		aSet.setFinn();
 		aSet.setJake();
+		n.useMap2 = true;
 		// playMusic(0);
 		gameState = menuState;
 		tempScreen = new BufferedImage(screenWidgth, screenHeigh, BufferedImage.TYPE_INT_ARGB);

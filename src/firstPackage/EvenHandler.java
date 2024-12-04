@@ -44,12 +44,23 @@ public class EvenHandler {
 			System.out.println("Your health:" + k.player.life);
 		}
 		
-		if(hit(10,9,"up") == true) {
-			messageWrite(10,9,k.DialogueState,"Това място ми се струва познато...");
+		
+		if(hit(13,15,"right") == true) {
+			messageWrite(13,15,k.DialogueState,"Леле не мога да повярвам че...\n вече имаме годишнина!","Сигурна съм че ще е супер ден!", "Макар че ми е чудно...\n какво ли е направил за датата ни?","И кога ще мога да видя мъжа ми? :(");
 		}
-		if(hit(15,14,"right") == true) {
-			messageWrite(15,14,k.DialogueState,"Ама играта е страхотна!");
+		if(hit(12,15,"left") == true) {
+			messageWriteLooping(12,15,k.DialogueState,"Няма какво да правя навън днес. ");
 		}
+		if(hit(11,15,"left") == true) {
+			messageWriteLooping(11,15,k.DialogueState,"Ама наистина не ми се излиза...","Защо изобщо ходя към вратата?");
+		}
+		if(hit(10,15,"left") == true) {
+			messageWriteLooping(10,15,k.DialogueState,"Не мога да отворя?","Вратата е заяла.","По-добре да изчакам нашите.");
+		}
+		if(hit(17,10,"down") == true) {
+			messageWriteLooping(17,10,k.DialogueState,"Ех че спомени има тук.","Спомням си колко се радва Марти...","...когато дойде за първи път тук...","...и видя че имаме 2 тоалетни.");
+		}
+		
 	}
 
 	public boolean hit(int col, int row, String req) {
@@ -87,13 +98,26 @@ public class EvenHandler {
 	}
 	
 
-	public void messageWrite(int col,int row, int gameStae,String writeMessageHere) {
+	public void messageWrite(int col, int row, int gameState, String... messages) {
+	    k.gameState = gameState;
+
+	    // Store the messages in the UI queue for sequential display
+	    for (String message : messages) {
+	        k.view.addMessage(message);
+	    }
+
+	    rect[col][row].eventDone = true; // Trigger the event only once
+	}
+
+
+	public void messageWriteLooping(int col,int row, int gameStae,String... writeMessageHere) {
 		k.gameState = gameStae;
-		k.view.currectDialogue = "Гери:"+writeMessageHere;
-		//k.player.life -= 1;
+		   for (String message :  writeMessageHere) {
+		        k.view.addMessage(message);
+		    }
+
 		
-		
-		rect[col][row].eventDone = true;//it works only once.ddddd
+		rect[col][row].eventDone = false;//it works only once.ddddd
 	}
 
 

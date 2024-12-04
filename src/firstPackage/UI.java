@@ -6,12 +6,17 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import objectCode.OBJ_Heart;
 import objectCode.OBJ_Key;
 import objectCode.superObject;
 
 public class UI {
+	private Queue<String> messageQueue = new LinkedList<>(); // Queue for messages
+	public  boolean isDisplayingMessages = false; // Flag to indicate if messages are active
+
 	gamePanel k;
 	// superObject so;
 	Font font_Keys;
@@ -45,9 +50,37 @@ public class UI {
 		messageNoIdea = n;
 		MessageOn = true;
 	}
+	
+	public void addMessage(String message) {
+	    String[] lines = message.split("\n"); // Split message into multiple lines
+	    for (String line : lines) {
+	        messageQueue.add(line); // Add each line to the queue
+	    }
+	    isDisplayingMessages = true; // Start displaying messages
+	}
 
+
+	public void nextMessage() {
+	    if (!messageQueue.isEmpty()) {
+	        messageQueue.poll(); // Remove the current message
+	    }
+	}
+
+//	
+//	int x = k.tileSize * 2;
+//	int y = k.tileSize / 2;
+//	int wid = k.screenWidgth - (k.tileSize * 4);
+//	int high = k.screenHeigh / 5;
+//	miniWindow(x, y, wid, high);
+//	x += k.tileSize;
+//	y += k.tileSize;
+//	for (String line : currectDialogue.split("\n")) {
+//		g2.drawString(line, x, y);
+//		y += k.tileSize;
+	
 	public void draw(Graphics2D gp2) {
 		this.g2 = gp2;
+		
 //		if (GameFinished == true) {
 //			e.setFont(new Font("Arial", Font.BOLD, 55));
 //			e.setColor(Color.white);
@@ -68,8 +101,8 @@ public class UI {
 //		else {
 		gp2.setFont(font_Keys);
 		gp2.setColor(Color.white);
-		gp2.drawImage(keyPicture, k.tileSize / 3, k.tileSize / 3, k.tileSize - 6, k.tileSize - 6, null);
-		gp2.drawString("Key:" + k.player.hasKey, 73, 50);
+		gp2.drawImage(keyPicture, k.tileSize / 2, k.tileSize * 2 , k.tileSize - 6, k.tileSize - 6, null);
+		gp2.drawString("Key:" + k.player.hasKey, 65, 135);
 
 		playTime += (double) 1 / 60;
 		gp2.drawString("Time:" + format.format(playTime), k.tileSize * 11, 65);
@@ -102,6 +135,32 @@ public class UI {
 		if (k.gameState == k.DialogueState) {
 			drawScreenDialogue();
 		}
+		
+
+
+	    // If there are messages to display
+	    if (isDisplayingMessages && !messageQueue.isEmpty()) {
+	        // Draw dialogue background
+	        int x = k.tileSize * 2;
+	        int y = k.tileSize * 1; // Fixed position for dialogue
+
+	        // Draw message text
+	        x += k.tileSize;
+	        y += k.tileSize;
+
+	        // Render the current message (supports multi-line messages)
+	        String currentMessage = messageQueue.peek();
+	        for (String line : currentMessage.split("\n")) {
+	            g2.drawString(line, x, y);
+	            y += k.tileSize; // Move to the next line
+	        }
+	    }
+
+	    // End of messages
+	    if (isDisplayingMessages && messageQueue.isEmpty()) {
+	        isDisplayingMessages = false;
+	        k.gameState = k.playerState; // Return to player state after all messages
+	    }
 	}
 
 	public void drawPlayerLife() {
@@ -214,7 +273,7 @@ public class UI {
 		int x = k.tileSize * 2;
 		int y = k.tileSize / 2;
 		int wid = k.screenWidgth - (k.tileSize * 4);
-		int high = k.screenHeigh / 5;
+		int high = k.screenHeigh / 4;
 		miniWindow(x, y, wid, high);
 		x += k.tileSize;
 		y += k.tileSize;

@@ -13,6 +13,8 @@ public class soundController {
 	soundController() {
 		soundURL[0] = getClass().getResource("/sounds/Background_Music.wav");
 		soundURL[1] = getClass().getResource("/sounds/Sound.wav");
+		soundURL[2] = getClass().getResource("/sounds/DoorSound.wav");
+		soundURL[3] = getClass().getResource("/sounds/soundOfGettingKeys.wav");
 	}
 
 	public void setFile(int i) {

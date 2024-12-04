@@ -84,12 +84,15 @@ public class keyControl implements KeyListener {
 		}
 		// play state
 		else if (gpReal.gameState == gpReal.DialogueState) {
-
-			if (keyCode == KeyEvent.VK_ENTER) {
-				gpReal.gameState = gpReal.playerState;
-			}
-
+		    if (keyCode == KeyEvent.VK_ENTER) {
+		        if (gpReal.view.isDisplayingMessages) {
+		            gpReal.view.nextMessage(); // Show the next message
+		        } else {
+		            gpReal.gameState = gpReal.playerState; // End conversation if no more messages
+		        }
+		    }
 		}
+
 
 	}
 //			if (keyCode == KeyEvent.VK_P) {

@@ -17,21 +17,21 @@ import firstPackage.gamePanel;
 //well I hope it works
 public class tileManager {
 	
-	    public int[][] mapTileNum;
-
-
 	gamePanel gp;
 	public tile[] tile;
 	public int mapTilesNum[][];
+	public int mapTilesNum2[][];
+	public boolean useMap2 = false; // Toggle to select the map
+
 	ArrayList<String> fileNames = new ArrayList<String>();
 	ArrayList<String> collisionStatus = new ArrayList<String>();
 
 	public tileManager(gamePanel gp) {
 		this.gp = gp;
-		InputStream is = getClass().getResourceAsStream("/maps/levelOneData.txt");
+		
+		if(useMap2 == false) {
+		InputStream is = getClass().getResourceAsStream("/maps/MainGameMapTileData.txt");
 		BufferedReader br = new BufferedReader(new InputStreamReader(is));
-		mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
-
 		String line;
 		try {
 			while ((line = br.readLine()) != null) {
@@ -44,11 +44,8 @@ public class tileManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		tile = new tile[fileNames.size()];// tiles types
-		getTileImage();
-
-		is = getClass().getResourceAsStream("/maps/levelOne.txt");
+		
+		is = getClass().getResourceAsStream("/maps/MainGameMap.txt");
 		br = new BufferedReader(new InputStreamReader(is));
 
 		try {
@@ -62,11 +59,90 @@ public class tileManager {
 			br.close();
 		} catch (IOException e) {
 			System.out.println("Exception!");
+
+		
 		}
-loadingInTheMap("/maps/levelOne.txt");
+		
+		}
+
+		if(useMap2 == true) {
+		InputStream is = getClass().getResourceAsStream("/maps/MainGameMapTileData.txt");
+		BufferedReader br = new BufferedReader(new InputStreamReader(is));
+		
+		String line;
+		try {
+			while ((line = br.readLine()) != null) {
+				fileNames.add(line);
+				collisionStatus.add(br.readLine());
+			}
+
+			br.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		is = getClass().getResourceAsStream("/maps/MainGameMap.txt");
+		br = new BufferedReader(new InputStreamReader(is));
+
+		try {
+			String line2 = br.readLine();
+			String maxTile[] = line2.split(" ");
+
+			gp.maxWorldCol = maxTile.length;
+			gp.maxWorldRow = maxTile.length;
+			mapTilesNum = new int[gp.maxWorldCol][gp.maxWorldRow];
+
+			br.close();
+		} catch (IOException e) {
+			System.out.println("Exception!");
+
+		
+		}
+		}
+		
+		
+		mapTilesNum = new int[gp.maxWorldCol][gp.maxWorldRow];
+	    mapTilesNum2 = new int[gp.maxWorldCol][gp.maxWorldRow]; // Initialize mapTilesNum2
+
+		
+
+		tile = new tile[fileNames.size()];// tiles types
+		getTileImage();
+
+	
+		
+		
+loadingInTheMap("/maps/MainGameMap.txt", mapTilesNum2); // Example second map
+loadingInTheMap("/maps/MainGameMap.txt",mapTilesNum);
 	//	loadingInTheMap("/maps/mapo1.txt");
 	}
 
+	
+	public void loadTileData(String dataFile) {
+	    try {
+	        InputStream is = getClass().getResourceAsStream(dataFile);
+	        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+	        fileNames.clear(); // Clear previous data
+	        collisionStatus.clear();
+
+	        String line;
+	        while ((line = br.readLine()) != null) {
+	            fileNames.add(line);           // Add the tile image file name
+	            collisionStatus.add(br.readLine()); // Add the collision status
+	        }
+
+	        br.close();
+
+	        tile = new tile[fileNames.size()]; // Reinitialize tiles array
+	        getTileImage(); // Load tile images based on the new data
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
+
+	
 	public void getTileImage() {
 
 		for (int i = 0; i < fileNames.size(); i++) {
@@ -103,7 +179,7 @@ loadingInTheMap("/maps/levelOne.txt");
 		}
 	}
 
-	public void loadingInTheMap(String tileMath) {
+	public void loadingInTheMap(String tileMath, int[][] targetMap) {
 	    try {
 	        InputStream is = getClass().getResourceAsStream(tileMath);
 	        BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -119,15 +195,16 @@ loadingInTheMap("/maps/levelOne.txt");
 	            mapData.add(rowData);
 	        }
 
-	        // Set map dimensions dynamically
-	        gp.maxWorldRow = mapData.size();
-	        gp.maxWorldCol = mapData.get(0).length;
-	        mapTilesNum = new int[gp.maxWorldCol][gp.maxWorldRow];
+	        // Set map dimensions dynamically for the first map loaded
+	        if (targetMap == mapTilesNum) {
+	            gp.maxWorldRow = mapData.size();
+	            gp.maxWorldCol = mapData.get(0).length;
+	        }
 
-	        for (int row = 0; row < gp.maxWorldRow; row++) {
+	        for (int row = 0; row < mapData.size(); row++) {
 	            int[] rowData = mapData.get(row);
-	            for (int col = 0; col < gp.maxWorldCol; col++) {
-	                mapTilesNum[col][row] = rowData[col];
+	            for (int col = 0; col < rowData.length; col++) {
+	                targetMap[col][row] = rowData[col];
 	            }
 	        }
 
@@ -138,16 +215,18 @@ loadingInTheMap("/maps/levelOne.txt");
 	}
 
 	public void draw(Graphics2D e) {
+	    int[][] currentMap = useMap2 ? mapTilesNum2 : mapTilesNum; // Select the map
+
 	    int startCol = Math.max(0, (gp.player.x - gp.player.screenX) / gp.tileSize);
-	    int endCol = Math.min(mapTilesNum.length, (gp.player.x + gp.player.screenX) / gp.tileSize + 2);
+	    int endCol = Math.min(currentMap.length, (gp.player.x + gp.player.screenX) / gp.tileSize + 2);
 
 	    int startRow = Math.max(0, (gp.player.y - gp.player.screenY) / gp.tileSize);
-	    int endRow = Math.min(mapTilesNum[0].length, (gp.player.y + gp.player.screenY) / gp.tileSize + 2);
+	    int endRow = Math.min(currentMap[0].length, (gp.player.y + gp.player.screenY) / gp.tileSize + 2);
 
 	    for (int row = startRow; row < endRow; row++) {
 	        for (int col = startCol; col < endCol; col++) {
-	            if (col >= mapTilesNum.length || row >= mapTilesNum[0].length) continue;
-	            int tileIndex = mapTilesNum[col][row];
+	            if (col >= currentMap.length || row >= currentMap[0].length) continue;
+	            int tileIndex = currentMap[col][row];
 
 	            if (tileIndex >= 0 && tileIndex < tile.length) {
 	                int worldX = col * gp.tileSize;
@@ -160,6 +239,7 @@ loadingInTheMap("/maps/levelOne.txt");
 	        }
 	    }
 	}
+
 
 }
 
